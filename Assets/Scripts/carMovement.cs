@@ -6,7 +6,7 @@ public class carMovement : MonoBehaviour
 {
     public Transform transform;
     public float speedSx = 5f;
-    public float speedDx = 1.5f;
+    public float speedDx = 0.1f;
     // Start is called before the first frame update
     void Start()
     {
