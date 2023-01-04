@@ -12,6 +12,8 @@ public class acatBus : MonoBehaviour
     public float rotationSpeed = 5;
     public int coins = 0;
     public Text coinsText;
+    public int pedoni = 0;
+    public Text pedoniText;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +43,7 @@ public class acatBus : MonoBehaviour
     {
         Move();
         coinsText.text = coins.ToString();
+        pedoniText.text = pedoni.ToString();
     }
 
     private void Move(){
@@ -71,6 +74,10 @@ public class acatBus : MonoBehaviour
         }
         else if(collision.gameObject.tag == "Coin"){
             coins += 1;
+            Destroy(collision.gameObject);
+        }
+         else if(collision.gameObject.tag == "Pedone"){
+            pedoni += 1;
             Destroy(collision.gameObject);
         }
     }

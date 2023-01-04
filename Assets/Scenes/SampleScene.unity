@@ -133,7 +133,8 @@ GameObject:
   m_Component:
   - component: {fileID: 20226017}
   - component: {fileID: 20226016}
-  - component: {fileID: 20226018}
+  - component: {fileID: 20226019}
+  - component: {fileID: 20226020}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -192,7 +193,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &20226018
+--- !u!114 &20226019
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -201,11 +202,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 20226015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7084357552bcd6347a7d9fc25cb5c5b8, type: 3}
+  m_Script: {fileID: 11500000, guid: c66229e401b0cd14294e0bf278f88396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   coin: {fileID: 2234244525987428209, guid: fab51870b899cb74296f43064490809d, type: 3}
-  spawnTime: 3
+  spawnTime: 5
+  xPositions:
+  - -2.46
+  - -1.55
+  - -0.6
+  - 0.6
+  - 1.52
+  - 2.44
+--- !u!114 &20226020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20226015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c35d62e99f073b848b5354c05aaf7d16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pedoni:
+  - {fileID: 5586116150882086427, guid: 984dda13dd8a8784e9c86777cd5da4a3, type: 3}
+  - {fileID: 3004251165860616277, guid: 8f6e9c921597e84488226d69ce8e9bbd, type: 3}
+  - {fileID: 4519585449710480302, guid: 185df8f6a43731d4fa28159815ba0bda, type: 3}
+  spawnTime: 5
   xPositions:
   - -2.46
   - -1.55
@@ -821,6 +846,86 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!1 &941777412
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 941777413}
+  - component: {fileID: 941777415}
+  - component: {fileID: 941777414}
+  m_Layer: 5
+  m_Name: Pedoni
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &941777413
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941777412}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.79067266, y: 1.218896, z: 0.53638446}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1167183464}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -170, y: 466}
+  m_SizeDelta: {x: 200, y: 50}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &941777414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941777412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.21960786, g: 0.9254902, b: 0.21960786, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 8a2b9e2a607dd2143b58c44bc32410b4, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 3
+    m_BestFit: 0
+    m_MinSize: 4
+    m_MaxSize: 40
+    m_Alignment: 3
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 0
+--- !u!222 &941777415
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941777412}
+  m_CullTransparentMesh: 1
 --- !u!1 &946706130
 GameObject:
   m_ObjectHideFlags: 0
@@ -1168,6 +1273,7 @@ RectTransform:
   - {fileID: 2006707180}
   - {fileID: 776691109}
   - {fileID: 752442014}
+  - {fileID: 941777413}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1554,6 +1660,8 @@ MonoBehaviour:
   rotationSpeed: 5
   coins: 0
   coinsText: {fileID: 752442015}
+  pedoni: 0
+  pedoniText: {fileID: 941777414}
 --- !u!50 &1935113271
 Rigidbody2D:
   serializedVersion: 4
