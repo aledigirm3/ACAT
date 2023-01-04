@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 public class acatBus : MonoBehaviour
 {
     Rigidbody2D rb;
@@ -8,6 +9,9 @@ public class acatBus : MonoBehaviour
     public bool moveRight;
     public float horizontalMove;
     public float speed = 5;
+    public float rotationSpeed = 5;
+    public int coins = 0;
+    public Text coinsText;
 
     // Start is called before the first frame update
     void Start()
@@ -36,21 +40,38 @@ public class acatBus : MonoBehaviour
     void Update()
     {
         Move();
+        coinsText.text = coins.ToString();
     }
 
     private void Move(){
-        if(moveLeft){
+        if(moveLeft && rb.position.x >= -2f){
+            rb.rotation = 5;
             horizontalMove = -speed;
         }
-        else if(moveRight){
+        else if(moveRight && rb.position.x <= 3.31){
+            rb.rotation = -5;
             horizontalMove = speed;
         }
         else{
+            rb.rotation = 0;
             horizontalMove = 0;
         }
     }
 
     private void FixedUpdate(){
         rb.velocity = new Vector2(horizontalMove, rb.velocity.y);
+    }
+    private void OnTriggerEnter2D(Collider2D collision){
+        if(collision.gameObject.tag == "Car"){
+            Time.timeScale = 0;
+        }
+         else if(collision.gameObject.tag == "Border"){
+            PointerUpLeft();
+            PointerUpRight();
+        }
+        else if(collision.gameObject.tag == "Coin"){
+            coins += 1;
+            Destroy(collision.gameObject);
+        }
     }
 }
