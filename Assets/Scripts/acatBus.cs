@@ -47,12 +47,12 @@ public class acatBus : MonoBehaviour
     }
 
     private void Move(){
-        if(moveLeft && rb.position.x >= -2f){
-            rb.rotation = 5;
+        if(moveLeft && rb.position.x >= -4.55f){
+            rb.rotation = 3;
             horizontalMove = -speed;
         }
-        else if(moveRight && rb.position.x <= 3.31){
-            rb.rotation = -5;
+        else if(moveRight && rb.position.x <= 4.55f){
+            rb.rotation = -3;
             horizontalMove = speed;
         }
         else{
