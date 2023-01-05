@@ -360,7 +360,7 @@ Camera:
   far clip plane: 1000
   field of view: 69.5
   orthographic: 1
-  orthographic size: 16.25
+  orthographic size: 8.55
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -404,7 +404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wireColor: {r: 1, g: 1, b: 1, a: 1}
-  UnitsSize: 32.5
+  UnitsSize: 17.1
   constraint: 1
   camera: {fileID: 519420031}
   executeInUpdate: 1
@@ -911,7 +911,7 @@ Transform:
   m_GameObject: {fileID: 950698868}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 2.34}
-  m_LocalScale: {x: 14.7, y: 33, z: 1}
+  m_LocalScale: {x: 14.7, y: 17.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
