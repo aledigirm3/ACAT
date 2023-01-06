@@ -4,16 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 public class acatBus : MonoBehaviour
 {
+    //MOVIMENTO
     Rigidbody2D rb;
     public bool moveLeft;
     public bool moveRight;
     public float horizontalMove;
     public float speed = 5;
     public float rotationSpeed = 5;
+    //PUNTEGGI
     public int coins = 0;
     public Text coinsText;
     public int pedoni = 0;
+    public int maxPedoni;
     public Text pedoniText;
+
+    //GAME OVER
+    public GameObject gameOverPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -21,7 +27,11 @@ public class acatBus : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         moveLeft = false;
         moveRight = false;
+        gameOverPanel.SetActive(false);
+        Debug.Log(PlayerPrefs.GetInt("maxPedoni"));
     }
+
+    //===============================================================
       public void PointerUpLeft(){
         moveLeft = false;
     }
@@ -37,11 +47,19 @@ public class acatBus : MonoBehaviour
     public void PointerDownRight(){
         moveRight = true;
     }
+    //===============================================================
 
     // Update is called once per frame
     void Update()
     {
         Move();
+
+
+        if(pedoni > maxPedoni){
+            PlayerPrefs.SetInt("maxPedoni", pedoni);
+        }
+
+
         coinsText.text = coins.ToString();
         pedoniText.text = pedoni.ToString();
     }
@@ -67,6 +85,7 @@ public class acatBus : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision){
         if(collision.gameObject.tag == "Car"){
             Time.timeScale = 0;
+            gameOverPanel.SetActive(true);
         }
          else if(collision.gameObject.tag == "Border"){
             PointerUpLeft();

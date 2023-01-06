@@ -18,7 +18,7 @@ public class PedoneMovement : MonoBehaviour
 
         transform.position -= new Vector3(0, speed * Time.deltaTime, 0);
     
-        if(transform.position.y <= -6){
+        if(transform.position.y <= -11){
             Destroy(gameObject);
         }
     }

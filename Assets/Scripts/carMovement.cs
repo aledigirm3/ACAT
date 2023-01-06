@@ -23,7 +23,7 @@ public class carMovement : MonoBehaviour
         else{
         transform.position -= new Vector3(0, speedDx * Time.deltaTime, 0);
         }
-        if(transform.position.y <= -6){
+        if(transform.position.y <= -11){
             Destroy(gameObject);
         }
     }
