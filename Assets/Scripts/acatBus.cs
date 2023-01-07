@@ -15,8 +15,8 @@ public class acatBus : MonoBehaviour
     public int coins = 0;
     public Text coinsText;
     public int pedoni = 0;
-    public int maxPedoni;
     public Text pedoniText;
+    public int maxPedoni;
 
     //GAME OVER
     public GameObject gameOverPanel;
@@ -27,8 +27,8 @@ public class acatBus : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         moveLeft = false;
         moveRight = false;
+        Time.timeScale = 1;
         gameOverPanel.SetActive(false);
-        Debug.Log(PlayerPrefs.GetInt("maxPedoni"));
     }
 
     //===============================================================
