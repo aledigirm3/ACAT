@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 public class acatBus : MonoBehaviour
 {
     //MOVIMENTO
@@ -13,9 +14,9 @@ public class acatBus : MonoBehaviour
     public float rotationSpeed = 5;
     //PUNTEGGI
     public int coins = 0;
-    public Text coinsText;
+    public TextMeshProUGUI coinsText;
     public int pedoni = 0;
-    public Text pedoniText;
+    public TextMeshProUGUI pedoniText;
     public int maxPedoni;
 
     //GAME OVER

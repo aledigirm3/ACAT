@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameOver : MonoBehaviour
 {
-        public Text maxPedoniText;
-        public Text pedoniText;
-        public acatBus bus;
-    // Start is called before the first frame update
-    void Start()
-    {
+    public TextMeshProUGUI maxPedoniText;
+    public TextMeshProUGUI pedoniText;
+    public acatBus bus;
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
         maxPedoniText.text = ("PUNTEGGIO MAX: " + PlayerPrefs.GetInt("maxPedoni").ToString());
@@ -23,6 +18,11 @@ public class GameOver : MonoBehaviour
     }
 
     public void Restart(){
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Game");
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }
