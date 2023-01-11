@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+
 public class Bus : MonoBehaviour
 {
     //MOVIMENTO
@@ -14,9 +15,10 @@ public class Bus : MonoBehaviour
     public float rotation = 3;
     public float rotationSpeed = 5;
 
+    //GAMEMANAGER
     public GameManager gameManager;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         carRigidbody = GetComponent<Rigidbody2D>();
@@ -66,16 +68,11 @@ public class Bus : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        carRigidbody.velocity = new Vector2(horizontalMove, carRigidbody.velocity.y);
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Car")
         {
-            gameManager.onGameOver();
+            gameManager.OnGameOver();
         }
         else if (collision.gameObject.tag == "Border")
         {
@@ -86,6 +83,11 @@ public class Bus : MonoBehaviour
         {
             gameManager.FriendlyCollision(collision.gameObject);
         }
+    }
+
+    private void FixedUpdate()
+    {
+        carRigidbody.velocity = new Vector2(horizontalMove, carRigidbody.velocity.y);
     }
 
 }

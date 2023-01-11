@@ -3354,7 +3354,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1508605143}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: onPause
+        m_MethodName: OnPause
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3622,7 +3622,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1508605143}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: onResume
+        m_MethodName: OnResume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

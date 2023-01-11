@@ -61,14 +61,14 @@ public class GameManager : MonoBehaviour
         Destroy(obj);
     }
 
-    public void togglePerks(bool value)
+    public void TogglePerks(bool value)
     {
         Revive.gameObject.SetActive(value);
         Shield.gameObject.SetActive(value);
         Multiplier.gameObject.SetActive(value);
     }
 
-    public void onGameOver()
+    public void OnGameOver()
     {
         Time.timeScale = 0;
 
@@ -76,31 +76,32 @@ public class GameManager : MonoBehaviour
         Close.gameObject.SetActive(false);
         GameplayPanel.SetActive(false);
 
-        //Salvo il nuovo punteggio più alto
-        if (Pedoni > PlayerPrefs.GetInt("maxPedoni"))
-            PlayerPrefs.SetInt("maxPedoni", Pedoni);
+        //Salvo il nuovo punteggio più alto e aggiungo le monete raccolte
+        if (Pedoni > PlayerPrefs.GetInt("Highscore"))
+            PlayerPrefs.SetInt("Highscore", Pedoni);
+        PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") + Coins);
 
         //Setup UI di Gameover
-        MaxPedoniText.text = ("HIGHEST SCORE: " + PlayerPrefs.GetInt("maxPedoni").ToString());
+        MaxPedoniText.text = ("HIGHEST SCORE: " + PlayerPrefs.GetInt("Highscore").ToString());
         PedoniInGameOverText.text = ("SCORE: " + Pedoni);
         GameOverPanel.SetActive(true);
     }
 
-    public void onPause()
+    public void OnPause()
     {
         Time.timeScale = 0;
         Pause.gameObject.SetActive(false);
         Close.gameObject.SetActive(true);
-        togglePerks(false);
+        TogglePerks(false);
         PausePanel.gameObject.SetActive(true);
     }
 
-    public void onResume()
+    public void OnResume()
     {
         Time.timeScale = 1;
         Close.gameObject.SetActive(false);
         Pause.gameObject.SetActive(true);
-        togglePerks(true);
+        TogglePerks(true);
         PausePanel.gameObject.SetActive(false);
     }
 
