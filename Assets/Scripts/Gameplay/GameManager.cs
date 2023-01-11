@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI PedoniText;
     public TextMeshProUGUI PedoniInGameOverText;
     public TextMeshProUGUI MaxPedoniText;
+    public TextMeshProUGUI PerkMultiplierTimeLeftText;
     public Button Revive;
     public Button Shield;
     public Button Multiplier;
@@ -27,21 +28,60 @@ public class GameManager : MonoBehaviour
     public GameObject PausePanel;
     public GameObject GameplayPanel;
 
+    //PERKS
+    public bool PerkMultiplierActivated;
+    public float PerkMultiplierDuration;
+    public float PerkMultiplierTimeLeft;
+
+    //GAME MANAGEMENT
+    public bool GamePaused;
+
     //SETUP
     void SetupUI()
     {
         PedoniText.text = Pedoni.ToString();
         CoinsText.text = Coins.ToString();
+
         GameOverPanel.SetActive(false);
         PausePanel.SetActive(false);
+
+        PerkMultiplierTimeLeftText.gameObject.SetActive(false);
+        PerkMultiplierTimeLeftText.text = PerkMultiplierDuration.ToString();
+    }
+
+    void SetupPerks()
+    {
+        PerkMultiplierActivated = false;
+        PerkMultiplierTimeLeft = PerkMultiplierDuration;
     }
 
     void Start()
     {
         Coins = 0;
         Pedoni = 0;
+        GamePaused = false;
+        SetupPerks();
         SetupUI();
         Time.timeScale = 1;
+    }
+
+    void Update()
+    {
+        if (!GamePaused)
+        {
+            if (PerkMultiplierActivated)
+            {
+                PerkMultiplierTimeLeftText.text = (Mathf.Ceil(PerkMultiplierTimeLeft)).ToString();
+                PerkMultiplierTimeLeft -= Time.deltaTime;
+                if (PerkMultiplierTimeLeft <= 0)
+                {
+                    PerkMultiplierActivated = false;
+                    PerkMultiplierTimeLeft = PerkMultiplierDuration;
+                    PerkMultiplierTimeLeftText.gameObject.SetActive(false);
+                    PerkMultiplierTimeLeftText.text = PerkMultiplierDuration.ToString();
+                }
+            }
+        }
     }
 
     //Controllo di collisioni "friendly" aventi comportamenti simili
@@ -54,8 +94,10 @@ public class GameManager : MonoBehaviour
         }
         else if (obj.tag == "Pedone")
         {
-            //TODO: Controlla perk multiplier
-            Pedoni += 1;
+            if (PerkMultiplierActivated)
+                Pedoni += 2;
+            else    
+                Pedoni += 1;
             PedoniText.text = Pedoni.ToString();
         }
         Destroy(obj);
@@ -71,6 +113,10 @@ public class GameManager : MonoBehaviour
     public void OnGameOver()
     {
         Time.timeScale = 0;
+
+        //Deattivo i perk
+        PerkMultiplierActivated = false;
+        PerkMultiplierTimeLeft = 0f;
 
         //Rimuovo elementi UI di Gameplay
         Close.gameObject.SetActive(false);
@@ -90,6 +136,7 @@ public class GameManager : MonoBehaviour
     public void OnPause()
     {
         Time.timeScale = 0;
+        GamePaused = true;
         Pause.gameObject.SetActive(false);
         Close.gameObject.SetActive(true);
         TogglePerks(false);
@@ -113,5 +160,14 @@ public class GameManager : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene("Menu");
+    }
+
+    public void ActivatePerkMultiplier()
+    {
+        if (!PerkMultiplierActivated)
+        {
+            PerkMultiplierTimeLeftText.gameObject.SetActive(true);
+            PerkMultiplierActivated = true;
+        } 
     }
 }

@@ -44,6 +44,7 @@ public class MainMenu : MonoBehaviour
 
     void Start()
     {
+        Application.targetFrameRate = 60;
         print("Reloaded");
         FirstStart();
         Setup();
@@ -51,7 +52,7 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-        Highscore.text = ("HIGHEST SCORE: " + PlayerPrefs.GetInt("Highscore").ToString());
+        Highscore.text = ("HIGH SCORE: " + PlayerPrefs.GetInt("Highscore").ToString());
     }
 
     public void PlayGame()
