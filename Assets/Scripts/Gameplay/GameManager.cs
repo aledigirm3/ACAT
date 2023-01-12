@@ -17,7 +17,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI PedoniInGameOverText;
     public TextMeshProUGUI MaxPedoniText;
     public TextMeshProUGUI PerkMultiplierTimeLeftText;
-    public Button Revive;
     public Button Shield;
     public Button Multiplier;
     public Button Pause;
@@ -105,7 +104,6 @@ public class GameManager : MonoBehaviour
 
     public void TogglePerks(bool value)
     {
-        Revive.gameObject.SetActive(value);
         Shield.gameObject.SetActive(value);
         Multiplier.gameObject.SetActive(value);
     }

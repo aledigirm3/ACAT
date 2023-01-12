@@ -596,10 +596,10 @@ MonoBehaviour:
   ShieldPerkCounter: {fileID: 454662170}
   MultiplierPerkPrice: 10
   ShieldPerkPrice: 30
-  BuyWindow: {fileID: 0}
-  LimitReachedWindow: {fileID: 0}
-  NoMoneyWindow: {fileID: 0}
-  DialoguePanel: {fileID: 0}
+  BuyWindow: {fileID: 1235467232}
+  LimitReachedWindow: {fileID: 1329607120}
+  NoMoneyWindow: {fileID: 64465056}
+  DialoguePanel: {fileID: 1325774382}
 --- !u!1 &429948445
 GameObject:
   m_ObjectHideFlags: 0
@@ -972,14 +972,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 367314635}
         m_TargetAssemblyTypeName: Store, Assembly-CSharp
-        m_MethodName: BuyMultiplierPerk
-        m_Mode: 1
+        m_MethodName: BuyPerk
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: MultiplierPerk
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &618595496
@@ -1758,7 +1758,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1168348675}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 367314635}
+        m_TargetAssemblyTypeName: Store, Assembly-CSharp
+        m_MethodName: CloseDialogueWindow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1168348675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2363,7 +2375,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1533635079}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 367314635}
+        m_TargetAssemblyTypeName: Store, Assembly-CSharp
+        m_MethodName: CloseDialogueWindow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1533635079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2438,8 +2462,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 75, y: -75}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 60, y: -60}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1589616847
 MonoBehaviour:
@@ -2484,7 +2508,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1589616848}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 367314635}
+        m_TargetAssemblyTypeName: Store, Assembly-CSharp
+        m_MethodName: GoToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1589616848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2681,7 +2717,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2035539848}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 367314635}
+        m_TargetAssemblyTypeName: Store, Assembly-CSharp
+        m_MethodName: CloseDialogueWindow
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2035539848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2879,16 +2927,16 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
-        m_Mode: 1
+      - m_Target: {fileID: 367314635}
+        m_TargetAssemblyTypeName: Store, Assembly-CSharp
+        m_MethodName: BuyPerk
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: ShieldPerk
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2128865145

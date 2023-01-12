@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 public class Store : MonoBehaviour
@@ -18,12 +19,17 @@ public class Store : MonoBehaviour
     public GameObject NoMoneyWindow;
     public GameObject DialoguePanel;
 
-    private void SetupUI()
+    private void DeactiveWholeDialoguePanel()
     {
         DialoguePanel.SetActive(false);
         BuyWindow.SetActive(false);
         LimitReachedWindow.SetActive(false);
         NoMoneyWindow.SetActive(false);
+    }
+
+    private void SetupUI()
+    {
+        DeactiveWholeDialoguePanel();
     }
 
     // Start is called before the first frame update
@@ -41,48 +47,52 @@ public class Store : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("MultiplierPerk") == 5)
         {
-            MultiplierPerkCounter.color = new Color(1.0f, 0.23f, 1.0f, 1.0f);
+            MultiplierPerkCounter.color = new Color(1.0f, 0f, 0f, 1.0f);
         }
         if (PlayerPrefs.GetInt("ShieldPerk") == 5)
         {
-            MultiplierPerkCounter.color = new Color(1.0f, 0.23f, 1.0f, 1.0f);
+            ShieldPerkCounter.color = new Color(1.0f, 0f, 0f, 1.0f);
         }
     }
 
-    public void BuyMultiplierPerk()
+    public void BuyPerk(string perkName)
     {
-        if (PlayerPrefs.GetInt("Money") >= MultiplierPerkPrice)
+        int perkPrice = (perkName == "MultiplierPerk") ? MultiplierPerkPrice : ShieldPerkPrice;
+        TextMeshProUGUI perkCounter = (perkName == "MultiplierPerk") ? MultiplierPerkCounter : ShieldPerkCounter;
+
+        if (PlayerPrefs.GetInt("Money") >= perkPrice)
         {
-            if (PlayerPrefs.GetInt("MultiplierPerk") < 5)
+            if (PlayerPrefs.GetInt(perkName) < 5)
             {
                 //BUYWINDOW
 
-                PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") - MultiplierPerkPrice);
-                PlayerPrefs.SetInt("MultiplierPerk", PlayerPrefs.GetInt("MultiplierPerk") + 1);
+                PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") - perkPrice);
+                PlayerPrefs.SetInt(perkName, PlayerPrefs.GetInt(perkName) + 1);
+                MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
+                perkCounter.text = PlayerPrefs.GetInt(perkName).ToString() + "/5";
                 CheckIfPerkLimitHasReached();
             }
             else
             {
-                //LIMITREACHEDWINDOW
+                DialoguePanel.SetActive(true);
+                LimitReachedWindow.SetActive(true);
             }
         }
         else
         {
-            //NOMONEYWINDOW
+            DialoguePanel.SetActive(true);
+            NoMoneyWindow.SetActive(true);
         }
     }
 
-    public void BuyShieldPerk()
+    public void GoToMainMenu()
     {
-        if (PlayerPrefs.GetInt("Money") >= ShieldPerkPrice)
-        {
-            if (PlayerPrefs.GetInt("ShieldPerk") < 5)
-            {
-                PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") - ShieldPerkPrice);
-                PlayerPrefs.SetInt("ShieldPerk", PlayerPrefs.GetInt("ShieldPerk") + 1);
-                CheckIfPerkLimitHasReached();
-            }
-        }
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void CloseDialogueWindow()
+    {
+        DeactiveWholeDialoguePanel();
     }
 
 }
