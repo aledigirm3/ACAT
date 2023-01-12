@@ -2,24 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinMovement : MonoBehaviour
+public class FermataMovement : MonoBehaviour
 {
     public new Transform transform;
     public float speed;
-    // Start is called before the first frame update
+
     void Start()
     {
-       transform.GetComponent<Transform>();
+        transform.GetComponent<Transform>();
         speed = 2f;
+        if (transform.position.x >= 0)
+            transform.localScale = new Vector3(-1.5f, 1.5f, 1f);
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-
         transform.position -= new Vector3(0, speed * Time.deltaTime, 0);
-    
-        if(transform.position.y <= -11){
+        if (transform.position.y <= -11)
+        {
             Destroy(gameObject);
         }
     }

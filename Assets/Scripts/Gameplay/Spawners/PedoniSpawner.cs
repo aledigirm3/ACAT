@@ -19,7 +19,8 @@ public class PedoniSpawner : MonoBehaviour
         
     }
 
-    void Pedoni(){
+    void Pedoni()
+    {
         int randpedoni = Random.Range(0,pedoni.Length);
         int randPosition = Random.Range(0, xPositions.Length);
         Instantiate(pedoni[randpedoni],new Vector2(xPositions[randPosition], transform.position.y),Quaternion.Euler(0,0,0));

@@ -6,7 +6,7 @@ public class CarSpawner : MonoBehaviour
 {
     public GameObject[] car;
     public float spawnTime = 3;
-    public float[] xPositions = new float[] {-2.76f, -1.67f, -0.59f, 0.6f, 1.7f, 2.78f};
+    public float[] xPositions = new float[] {-2.76f, -1.67f, -0.59f, 0.6f, 1.7f, 2.78f}; 
 
     void Start()
     {

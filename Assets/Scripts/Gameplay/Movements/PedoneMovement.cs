@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class PedoneMovement : MonoBehaviour
 {
-    public Transform transform;
+    public new Transform transform;
     public float speed = 2f;
 
     void Start()
     {
-       transform.GetComponent<Transform>();
+        transform.GetComponent<Transform>();
+        speed = 2f;
     }
 
     void Update()

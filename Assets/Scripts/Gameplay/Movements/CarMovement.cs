@@ -4,28 +4,33 @@ using UnityEngine;
 
 public class CarMovement : MonoBehaviour
 {
-    public Transform transform;
-    public float speedSx = 5f;
-    public float speedDx = 0.1f;
-    // Start is called before the first frame update
+    public new Transform transform;
+    public float SpeedOppositeDirection;
+    public float SpeedSameDirection;
+    public float YBound = -11f;
+    private bool SameDirection;
+
     void Start()
     {
-       transform.GetComponent<Transform>();
+        transform.GetComponent<Transform>();
+        SameDirection = transform.position.x >= 0;
+        SpeedOppositeDirection = 7f;
+        SpeedSameDirection = 5f;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(transform.position.x < 0)
+
+        if(SameDirection)
         {
-            //transform.eulerAngles = new Vector3(0, 0, -90); 
-            transform.position -= new Vector3(0, speedSx * Time.deltaTime, 0);
+            transform.position -= new Vector3(0, SpeedSameDirection * Time.deltaTime, 0);
         }
         else
         {
-            transform.position -= new Vector3(0, speedDx * Time.deltaTime, 0);
+            transform.position -= new Vector3(0, SpeedOppositeDirection * Time.deltaTime, 0);
         }
-        if(transform.position.y <= -11)
+
+        if(transform.position.y <= YBound)
         {
             Destroy(gameObject);
         }

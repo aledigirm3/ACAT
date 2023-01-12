@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 20226016}
   - component: {fileID: 20226019}
   - component: {fileID: 20226020}
+  - component: {fileID: 20226021}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
@@ -238,6 +239,23 @@ MonoBehaviour:
   - 0.6
   - 1.7
   - 2.78
+--- !u!114 &20226021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20226015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5c67401f906524d8cc6f63d6594edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fermata: {fileID: 8097287924687209168, guid: 6bd8757208561e74aa2223bf2382d487, type: 3}
+  spawnTime: 2
+  xPositions:
+  - -3.3
+  - 3.3
 --- !u!1 &115222047
 GameObject:
   m_ObjectHideFlags: 0
@@ -2443,7 +2461,6 @@ MonoBehaviour:
   PedoniInGameOverText: {fileID: 1185256499}
   MaxPedoniText: {fileID: 898335298}
   PerkMultiplierTimeLeftText: {fileID: 657350302}
-  Revive: {fileID: 0}
   Shield: {fileID: 195304077}
   Multiplier: {fileID: 1770885764}
   Pause: {fileID: 2018979967}
