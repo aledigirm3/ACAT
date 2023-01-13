@@ -18,27 +18,20 @@ public class CarSpawner : MonoBehaviour
         StartCoroutine(SpawnCars());
     }
 
-    void Cars(){
+    void Cars()
+    {
         int randCar = Random.Range(0,car.Length);
         int randPosition = Random.Range(0, xPositions.Length);
         float xPosition = xPositions[randPosition];
         GameObject carObj = Instantiate(car[randCar], new Vector2(xPosition, transform.position.y), Quaternion.Euler(0,0, (xPosition > 0 ? 90 : -90)));
-        if (xPosition > 0)
-        {
-            //Macchine che vanno nella stessa direzione
-            carObj.GetComponent<CarMovement>().Speed = SpeedSameDirection * ((float) Mathf.Sqrt(GameManagerObj.Difficulty));
-        }
-        else
-        {
-            carObj.GetComponent<CarMovement>().Speed = SpeedOppositeDirection * ((float)Mathf.Sqrt(GameManagerObj.Difficulty));
-        }
+        carObj.GetComponent<CarMovement>().Speed = ((xPosition > 0) ? SpeedSameDirection : SpeedOppositeDirection) * ((float)Mathf.Sqrt(GameManagerObj.Difficulty));
     }
 
-    IEnumerator SpawnCars(){
-        while(true){
-            print(GameManagerObj.Difficulty);
+    IEnumerator SpawnCars()
+    {
+        while(true)
+        {
             float time = (float)(spawnTime / (Mathf.Sqrt(GameManagerObj.Difficulty * 0.5f)));
-            print(time);
             yield return new WaitForSeconds(time);
             Cars();
         }

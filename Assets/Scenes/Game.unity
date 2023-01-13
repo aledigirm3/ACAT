@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coin: {fileID: 2234244525987428209, guid: fab51870b899cb74296f43064490809d, type: 3}
+  backgroundScroller: {fileID: 950698869}
   spawnTime: 5
   xPositions:
   - -2.76
@@ -225,7 +226,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 20226015}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c35d62e99f073b848b5354c05aaf7d16, type: 3}
   m_Name: 
@@ -260,6 +261,8 @@ MonoBehaviour:
   xPositions:
   - -3.3
   - 3.3
+  backgroundScroller: {fileID: 950698869}
+  GameManagerObj: {fileID: 1508605143}
 --- !u!1 &115222047
 GameObject:
   m_ObjectHideFlags: 0
@@ -1695,7 +1698,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b2664d31ea1b247af0b2e3e6a1b20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 0.22
+  SpeedIncreaser: 0.2
+  Speed: 0
   GameManager: {fileID: 1508605143}
   bgRenderer: {fileID: 950698870}
 --- !u!23 &950698870

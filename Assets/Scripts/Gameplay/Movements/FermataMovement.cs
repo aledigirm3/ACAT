@@ -5,20 +5,19 @@ using UnityEngine;
 public class FermataMovement : MonoBehaviour
 {
     public new Transform transform;
-    public float speed;
+    public float Speed;
     public GameManager GameManagerObj;
 
     void Start()
     {
         transform.GetComponent<Transform>();
-        speed = 2f;
         if (transform.position.x >= 0)
             transform.localScale = new Vector3(-1.5f, 1.5f, 1f);
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        transform.position -= new Vector3(0, speed * Time.deltaTime, 0);
+        transform.position -= new Vector3(0, Speed * Time.deltaTime, 0);
         if (transform.position.y <= -11)
         {
             Destroy(gameObject);
