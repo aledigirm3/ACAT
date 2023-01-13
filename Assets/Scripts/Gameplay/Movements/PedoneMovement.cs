@@ -6,11 +6,12 @@ public class PedoneMovement : MonoBehaviour
 {
     public new Transform transform;
     public float speed = 2f;
+    public GameManager GameManagerObj;
 
     void Start()
     {
         transform.GetComponent<Transform>();
-        speed = 4f;
+        speed = 2f;
     }
 
     void Update()

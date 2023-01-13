@@ -6,14 +6,15 @@ public class CoinMovement : MonoBehaviour
 {
     public new Transform transform;
     public float speed;
-    // Start is called before the first frame update
+    public GameManager GameManagerObj;
+
     void Start()
     {
        transform.GetComponent<Transform>();
-        speed = 4f;
+        speed = 2f;
     }
 
-    // Update is called once per frame
+
     void Update()
     {
 

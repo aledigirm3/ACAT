@@ -171,6 +171,7 @@ MonoBehaviour:
   - {fileID: 123088, guid: 2a6c9666ff3674c0fa0e0e5f828fb261, type: 3}
   - {fileID: 178192, guid: 16e3767e137ac4d72a3c4b489e555f9b, type: 3}
   - {fileID: 186698, guid: 332e0e9fe16bf4567ae4083692f4fcbd, type: 3}
+  GameManagerObj: {fileID: 1508605143}
   spawnTime: 3
   xPositions:
   - -2.76
@@ -179,6 +180,8 @@ MonoBehaviour:
   - 0.6
   - 1.7
   - 2.78
+  SpeedOppositeDirection: 0
+  SpeedSameDirection: 0
 --- !u!4 &20226017
 Transform:
   m_ObjectHideFlags: 0
@@ -192,7 +195,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &20226019
 MonoBehaviour:
@@ -252,6 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fermata: {fileID: 8097287924687209168, guid: 6bd8757208561e74aa2223bf2382d487, type: 3}
+  pedoni: []
   spawnTime: 2
   xPositions:
   - -3.3
@@ -616,7 +620,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &517054567
 GameObject:
@@ -743,7 +747,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &528836814
 GameObject:
@@ -1691,7 +1695,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1b2664d31ea1b247af0b2e3e6a1b20f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.23
+  Speed: 0.22
+  GameManager: {fileID: 1508605143}
   bgRenderer: {fileID: 950698870}
 --- !u!23 &950698870
 MeshRenderer:
@@ -1756,7 +1761,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &998719262
 GameObject:
@@ -1931,7 +1936,7 @@ RectTransform:
   - {fileID: 172627604}
   - {fileID: 115222048}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2290,7 +2295,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1464924791
 GameObject:
@@ -2472,6 +2477,9 @@ MonoBehaviour:
   PerkMultiplierDuration: 30
   PerkMultiplierTimeLeft: 0
   GamePaused: 0
+  Gameover: 0
+  Difficulty: 1
+  TimeBetweenDifficulties: 0.2
 --- !u!4 &1508605144
 Transform:
   m_ObjectHideFlags: 0
@@ -2485,7 +2493,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1580007828
 GameObject:
@@ -2837,7 +2845,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1770885762
 GameObject:
@@ -3058,7 +3066,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1935113268
 BoxCollider2D:

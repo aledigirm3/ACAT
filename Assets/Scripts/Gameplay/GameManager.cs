@@ -34,6 +34,11 @@ public class GameManager : MonoBehaviour
 
     //GAME MANAGEMENT
     public bool GamePaused;
+    public bool Gameover;
+    public float Difficulty;
+    public float TimeBetweenDifficulties;
+
+    private Coroutine coroutine;
 
     //SETUP
     void SetupUI()
@@ -58,10 +63,13 @@ public class GameManager : MonoBehaviour
     {
         Coins = 0;
         Pedoni = 0;
+        Difficulty = 1;
         GamePaused = false;
+        Gameover = false;
         SetupPerks();
         SetupUI();
         Time.timeScale = 1;
+        coroutine = StartCoroutine(IncreaseDifficulty());
     }
 
     void Update()
@@ -111,6 +119,7 @@ public class GameManager : MonoBehaviour
     public void OnGameOver()
     {
         Time.timeScale = 0;
+        Gameover = true;
 
         //Deattivo i perk
         PerkMultiplierActivated = false;
@@ -167,5 +176,17 @@ public class GameManager : MonoBehaviour
             PerkMultiplierTimeLeftText.gameObject.SetActive(true);
             PerkMultiplierActivated = true;
         } 
+    }
+
+    IEnumerator IncreaseDifficulty()
+    {
+        while (!Gameover)
+        {
+            yield return new WaitForSeconds(TimeBetweenDifficulties * Difficulty);
+            Difficulty += 1;
+            //Ferma la coroutine quando il livello di difficoltà è pari a 100
+            if (Difficulty >= 100)
+                StopCoroutine(coroutine);
+        }
     }
 }
