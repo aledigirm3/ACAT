@@ -13,8 +13,8 @@ public class CarSpawner : MonoBehaviour
 
     void Start()
     {
-        SpeedOppositeDirection = 2f;
-        SpeedSameDirection = 1.5f;
+        SpeedOppositeDirection = 2.5f;
+        SpeedSameDirection = 1.8f;
         StartCoroutine(SpawnCars());
     }
 

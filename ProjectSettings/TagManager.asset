@@ -8,6 +8,8 @@ TagManager:
   - Border
   - Coin
   - Pedone
+  - PedoniMagnet
+  - Bus
   layers:
   - Default
   - TransparentFX

@@ -235,7 +235,9 @@ MonoBehaviour:
   - {fileID: 5586116150882086427, guid: 984dda13dd8a8784e9c86777cd5da4a3, type: 3}
   - {fileID: 3004251165860616277, guid: 8f6e9c921597e84488226d69ce8e9bbd, type: 3}
   - {fileID: 4519585449710480302, guid: 185df8f6a43731d4fa28159815ba0bda, type: 3}
+  backgroundScroller: {fileID: 950698869}
   spawnTime: 5
+  Bus: {fileID: 1935113265}
   xPositions:
   - -2.76
   - -1.67
@@ -255,14 +257,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb5c67401f906524d8cc6f63d6594edc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fermata: {fileID: 8097287924687209168, guid: 6bd8757208561e74aa2223bf2382d487, type: 3}
-  pedoni: []
-  spawnTime: 2
+  Fermata: {fileID: 8097287924687209168, guid: 6bd8757208561e74aa2223bf2382d487, type: 3}
+  Pedone: {fileID: 5586116150882086427, guid: 984dda13dd8a8784e9c86777cd5da4a3, type: 3}
+  SpawnTime: 3
   xPositions:
   - -3.3
   - 3.3
   backgroundScroller: {fileID: 950698869}
   GameManagerObj: {fileID: 1508605143}
+  Bus: {fileID: 1935113265}
 --- !u!1 &115222047
 GameObject:
   m_ObjectHideFlags: 0
@@ -3000,7 +3003,7 @@ GameObject:
   - component: {fileID: 1935113272}
   m_Layer: 0
   m_Name: Bus
-  m_TagString: Untagged
+  m_TagString: Bus
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

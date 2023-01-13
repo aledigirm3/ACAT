@@ -7,6 +7,9 @@ public class FermataMovement : MonoBehaviour
     public new Transform transform;
     public float Speed;
     public GameManager GameManagerObj;
+    public GameObject Bus;
+
+    public GameObject[] Pedoni;
 
     void Start()
     {
@@ -18,6 +21,7 @@ public class FermataMovement : MonoBehaviour
     void Update()
     {
         transform.position -= new Vector3(0, Speed * Time.deltaTime, 0);
+
         if (transform.position.y <= -11)
         {
             Destroy(gameObject);

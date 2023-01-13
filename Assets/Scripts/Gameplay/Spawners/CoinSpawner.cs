@@ -23,8 +23,8 @@ public class CoinSpawner : MonoBehaviour
     void Coin()
     {
         int randPosition = Random.Range(0, xPositions.Length);
-        GameObject coinInstance = Instantiate(coin,new Vector2(xPositions[randPosition], transform.position.y),Quaternion.identity);
-        coinInstance.GetComponent<CoinMovement>().Speed = backgroundScroller.Speed * 20; 
+        GameObject coinObj = Instantiate(coin,new Vector2(xPositions[randPosition], transform.position.y),Quaternion.identity);
+        coinObj.GetComponent<CoinMovement>().Speed = backgroundScroller.Speed * 20; 
     }
 
     IEnumerator SpawnCoin(){
