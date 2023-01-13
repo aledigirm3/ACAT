@@ -10,7 +10,7 @@ public class CoinMovement : MonoBehaviour
     void Start()
     {
        transform.GetComponent<Transform>();
-        speed = 2f;
+        speed = 4f;
     }
 
     // Update is called once per frame

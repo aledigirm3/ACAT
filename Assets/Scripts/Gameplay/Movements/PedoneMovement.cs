@@ -10,7 +10,7 @@ public class PedoneMovement : MonoBehaviour
     void Start()
     {
         transform.GetComponent<Transform>();
-        speed = 2f;
+        speed = 4f;
     }
 
     void Update()

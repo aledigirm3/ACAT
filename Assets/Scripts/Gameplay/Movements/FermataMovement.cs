@@ -10,7 +10,7 @@ public class FermataMovement : MonoBehaviour
     void Start()
     {
         transform.GetComponent<Transform>();
-        speed = 2f;
+        speed = 4f;
         if (transform.position.x >= 0)
             transform.localScale = new Vector3(-1.5f, 1.5f, 1f);
     }

@@ -14,8 +14,8 @@ public class CarMovement : MonoBehaviour
     {
         transform.GetComponent<Transform>();
         SameDirection = transform.position.x >= 0;
-        SpeedOppositeDirection = 7f;
-        SpeedSameDirection = 5f;
+        SpeedOppositeDirection = 6f;
+        SpeedSameDirection = 1.5f;
     }
 
     void Update()
