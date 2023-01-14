@@ -35,5 +35,9 @@ public class PedoneMovement : MonoBehaviour
         {
             Destroy(transform.root.gameObject);
         }
+         if(transform.position.y <= -11)
+        {
+            Destroy(gameObject);
+        }
     }
 }

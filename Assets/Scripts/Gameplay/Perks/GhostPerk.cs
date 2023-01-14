@@ -15,6 +15,9 @@ public class GhostPerk : MonoBehaviour
     public float Duration;
     public float TimeLeft;
 
+    //AUDIO
+    public AudioSource ButtonMusic;
+
     public Image[] Available;
 
     public GameManager GameManagerObj;
@@ -78,6 +81,7 @@ public class GhostPerk : MonoBehaviour
         {
             if (!IsActivated)
             {
+                ButtonMusic.Play();
                 Available[PlayerPrefs.GetInt("GhostPerk") - 1].gameObject.SetActive(false);
                 PlayerPrefs.SetInt("GhostPerk", PlayerPrefs.GetInt("GhostPerk") - 1);
                 if (PlayerPrefs.GetInt("GhostPerk") == 0)

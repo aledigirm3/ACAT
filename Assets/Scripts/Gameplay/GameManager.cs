@@ -32,6 +32,12 @@ public class GameManager : MonoBehaviour
     public bool Gameover;
     public float Difficulty;
     public float TimeBetweenDifficulties;
+    
+    //AUDIO
+    public AudioSource GameMusic;
+    public AudioSource ButtonMusic;
+    public AudioSource PedoniMusic;
+
 
     private Coroutine coroutine;
 
@@ -55,6 +61,14 @@ public class GameManager : MonoBehaviour
         SetupUI();
         Time.timeScale = 1;
         coroutine = StartCoroutine(IncreaseDifficulty());
+
+        if(PlayerPrefs.GetInt("Music") == 1){
+            GameMusic.Play();
+        }
+        else{
+            GameMusic.Stop();
+        }
+
     }
 
     //Controllo di collisioni "friendly" aventi comportamenti simili
@@ -67,6 +81,7 @@ public class GameManager : MonoBehaviour
         }
         else if (obj.tag == "Pedone")
         {
+            PedoniMusic.Play();
             if (PerkManager.GetComponent<MultiplierPerk>().IsActivated)
                 Pedoni += 2;
             else    
@@ -86,6 +101,7 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0;
         Gameover = true;
+         GameMusic.Stop();
 
         //Deattivo i perk
         PerkManager.GetComponent<MultiplierPerk>().Deactivate();
@@ -95,7 +111,7 @@ public class GameManager : MonoBehaviour
         Close.gameObject.SetActive(false);
         GameplayPanel.SetActive(false);
 
-        //Salvo il nuovo punteggio più alto e aggiungo le monete raccolte
+        //Salvo il nuovo punteggio piï¿½ alto e aggiungo le monete raccolte
         if (Pedoni > PlayerPrefs.GetInt("Highscore"))
             PlayerPrefs.SetInt("Highscore", Pedoni);
         PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") + Coins);
@@ -108,30 +124,38 @@ public class GameManager : MonoBehaviour
 
     public void OnPause()
     {
+        ButtonMusic.Play();
         Time.timeScale = 0;
         GamePaused = true;
         Pause.gameObject.SetActive(false);
         Close.gameObject.SetActive(true);
         TogglePerks(false);
         PausePanel.gameObject.SetActive(true);
+        GameMusic.Pause();
     }
 
     public void OnResume()
     {
+        ButtonMusic.Play();
         Time.timeScale = 1;
         Close.gameObject.SetActive(false);
         Pause.gameObject.SetActive(true);
         TogglePerks(true);
         PausePanel.gameObject.SetActive(false);
+        if(PlayerPrefs.GetInt("Music") == 1){
+        GameMusic.Play();
+        }
     }
 
     public void Restart()
     {
+        ButtonMusic.Play();
         SceneManager.LoadScene("Game");
     }
 
     public void MainMenu()
     {
+        ButtonMusic.Play();
         SceneManager.LoadScene("Menu");
     }
 
@@ -141,7 +165,7 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(TimeBetweenDifficulties * Difficulty);
             Difficulty += 1;
-            //Ferma la coroutine quando il livello di difficoltà è pari a 100
+            //Ferma la coroutine quando il livello di difficoltï¿½ ï¿½ pari a 100
             if (Difficulty >= 100)
                 StopCoroutine(coroutine);
         }

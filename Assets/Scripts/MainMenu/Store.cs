@@ -19,6 +19,11 @@ public class Store : MonoBehaviour
     public GameObject NoMoneyWindow;
     public GameObject DialoguePanel;
 
+
+    public AudioSource GameMusic;
+    public AudioSource ButtonMusic;
+
+
     private void DeactiveWholeDialoguePanel()
     {
         DialoguePanel.SetActive(false);
@@ -35,12 +40,20 @@ public class Store : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+         ButtonMusic.Stop();
         MultiplierPerkPrice = 10;
         GhostPerkPrice = 30;
         MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
         MultiplierPerkCounter.text = PlayerPrefs.GetInt("MultiplierPerk").ToString() + "/5";
         GhostPerkCounter.text = PlayerPrefs.GetInt("GhostPerk").ToString() + "/5";
         CheckIfPerkLimitHasReached();
+           if(PlayerPrefs.GetInt("Music") == 1){
+            GameMusic.Play();
+        }
+        else{
+            GameMusic.Stop();
+        }
+
     }
 
     public void CheckIfPerkLimitHasReached()
@@ -57,6 +70,7 @@ public class Store : MonoBehaviour
 
     public void BuyPerk(string perkName)
     {
+        ButtonMusic.Play();
         int perkPrice = (perkName == "MultiplierPerk") ? MultiplierPerkPrice : GhostPerkPrice;
         TextMeshProUGUI perkCounter = (perkName == "MultiplierPerk") ? MultiplierPerkCounter : GhostPerkCounter;
 
@@ -87,11 +101,13 @@ public class Store : MonoBehaviour
 
     public void GoToMainMenu()
     {
+         ButtonMusic.Play();
         SceneManager.LoadScene("Menu");
     }
 
     public void CloseDialogueWindow()
     {
+        ButtonMusic.Play();
         DeactiveWholeDialoguePanel();
     }
 

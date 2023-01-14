@@ -15,6 +15,9 @@ public class MultiplierPerk : MonoBehaviour
     public float Duration;
     public float TimeLeft;
 
+    //AUDIO
+    public AudioSource ButtonMusic;
+
     public Image[] Available;
 
     public GameManager GameManagerObj;
@@ -74,6 +77,7 @@ public class MultiplierPerk : MonoBehaviour
         {
             if (!IsActivated)
             {
+                ButtonMusic.Play();
                 Available[PlayerPrefs.GetInt("MultiplierPerk") - 1].gameObject.SetActive(false);
                 PlayerPrefs.SetInt("MultiplierPerk", PlayerPrefs.GetInt("MultiplierPerk") - 1);
                 if (PlayerPrefs.GetInt("MultiplierPerk") == 0)

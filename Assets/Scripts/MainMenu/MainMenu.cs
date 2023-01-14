@@ -14,6 +14,10 @@ public class MainMenu : MonoBehaviour
     public Button SoundButton;
     public Button MuteSoundButton;
 
+
+    public AudioSource MenuMusic;
+    public AudioSource ButtonMusic;
+
     private void FirstStart()
     {
         if (!PlayerPrefs.HasKey("Music"))
@@ -32,6 +36,8 @@ public class MainMenu : MonoBehaviour
 
     private void Setup()
     {
+        ButtonMusic.Stop();
+        
         Money.text = PlayerPrefs.GetInt("Money").ToString();
         Highscore.text = PlayerPrefs.GetInt("Highscore").ToString();
 
@@ -60,16 +66,20 @@ public class MainMenu : MonoBehaviour
 
     public void PlayGame()
     {
+        ButtonMusic.Play();
         SceneManager.LoadScene("Game");
     }
 
     public void OpenStore()
     {
+        ButtonMusic.Play();
         SceneManager.LoadScene("Store");
     }
 
     public void MusicOn()
     {
+        
+        MenuMusic.Play();
         PlayerPrefs.SetInt("Music", 1);
         MuteMusicButton.gameObject.SetActive(false);
         MusicButton.gameObject.SetActive(true);
@@ -80,6 +90,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.SetInt("Music", 0);
         MusicButton.gameObject.SetActive(false);
         MuteMusicButton.gameObject.SetActive(true);
+        MenuMusic.Pause();
     }
 
     public void SoundOn()
