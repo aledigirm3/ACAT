@@ -26,8 +26,8 @@ public class MainMenu : MonoBehaviour
             PlayerPrefs.SetInt("Money", 150);
         if (!PlayerPrefs.HasKey("MultiplierPerk"))
             PlayerPrefs.SetInt("MultiplierPerk", 0);
-        if (!PlayerPrefs.HasKey("ShieldPerk"))
-            PlayerPrefs.SetInt("ShieldPerk", 0);
+        if (!PlayerPrefs.HasKey("GhostPerk"))
+            PlayerPrefs.SetInt("GhostPerk", 0);
     }
 
     private void Setup()

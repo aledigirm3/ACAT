@@ -9,10 +9,10 @@ public class Store : MonoBehaviour
 
     public TextMeshProUGUI MoneyText;
     public TextMeshProUGUI MultiplierPerkCounter;
-    public TextMeshProUGUI ShieldPerkCounter;
+    public TextMeshProUGUI GhostPerkCounter;
 
     public int MultiplierPerkPrice;
-    public int ShieldPerkPrice;
+    public int GhostPerkPrice;
 
     public GameObject BuyWindow;
     public GameObject LimitReachedWindow;
@@ -36,10 +36,10 @@ public class Store : MonoBehaviour
     void Start()
     {
         MultiplierPerkPrice = 10;
-        ShieldPerkPrice = 30;
+        GhostPerkPrice = 30;
         MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
         MultiplierPerkCounter.text = PlayerPrefs.GetInt("MultiplierPerk").ToString() + "/5";
-        ShieldPerkCounter.text = PlayerPrefs.GetInt("ShieldPerk").ToString() + "/5";
+        GhostPerkCounter.text = PlayerPrefs.GetInt("GhostPerk").ToString() + "/5";
         CheckIfPerkLimitHasReached();
     }
 
@@ -49,16 +49,16 @@ public class Store : MonoBehaviour
         {
             MultiplierPerkCounter.color = new Color(1.0f, 0f, 0f, 1.0f);
         }
-        if (PlayerPrefs.GetInt("ShieldPerk") == 5)
+        if (PlayerPrefs.GetInt("GhostPerk") == 5)
         {
-            ShieldPerkCounter.color = new Color(1.0f, 0f, 0f, 1.0f);
+            GhostPerkCounter.color = new Color(1.0f, 0f, 0f, 1.0f);
         }
     }
 
     public void BuyPerk(string perkName)
     {
-        int perkPrice = (perkName == "MultiplierPerk") ? MultiplierPerkPrice : ShieldPerkPrice;
-        TextMeshProUGUI perkCounter = (perkName == "MultiplierPerk") ? MultiplierPerkCounter : ShieldPerkCounter;
+        int perkPrice = (perkName == "MultiplierPerk") ? MultiplierPerkPrice : GhostPerkPrice;
+        TextMeshProUGUI perkCounter = (perkName == "MultiplierPerk") ? MultiplierPerkCounter : GhostPerkCounter;
 
         if (PlayerPrefs.GetInt("Money") >= perkPrice)
         {

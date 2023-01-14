@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 10717888}
   - component: {fileID: 10717887}
   m_Layer: 5
-  m_Name: ShieldTitle
+  m_Name: GhostTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SHIELD
+  m_text: GHOST
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d48e7a2872d369241873d4b8a6bf3d27, type: 2}
   m_sharedMaterial: {fileID: -4534379191484435049, guid: d48e7a2872d369241873d4b8a6bf3d27, type: 2}
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: MULTIPLIER PERK
+  m_text: MULTIPLIER
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d48e7a2872d369241873d4b8a6bf3d27, type: 2}
   m_sharedMaterial: {fileID: -4534379191484435049, guid: d48e7a2872d369241873d4b8a6bf3d27, type: 2}
@@ -593,9 +593,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoneyText: {fileID: 1166283632}
   MultiplierPerkCounter: {fileID: 915709503}
-  ShieldPerkCounter: {fileID: 454662170}
+  GhostPerkCounter: {fileID: 454662170}
   MultiplierPerkPrice: 10
-  ShieldPerkPrice: 30
+  GhostPerkPrice: 30
   BuyWindow: {fileID: 1235467232}
   LimitReachedWindow: {fileID: 1329607120}
   NoMoneyWindow: {fileID: 64465056}
@@ -688,7 +688,7 @@ GameObject:
   - component: {fileID: 454662171}
   - component: {fileID: 454662170}
   m_Layer: 5
-  m_Name: ShieldCounter
+  m_Name: GhostCounter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -823,7 +823,7 @@ GameObject:
   - component: {fileID: 456211730}
   - component: {fileID: 456211729}
   m_Layer: 5
-  m_Name: ShieldImage
+  m_Name: GhostImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -869,7 +869,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bde90d14d4eb91a41970f819dd133155, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9166def5c28abd242830c90f213fafe2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2263,7 +2263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1470958570}
   m_Layer: 5
-  m_Name: ShieldPerk
+  m_Name: GhostPerk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2857,7 +2857,7 @@ GameObject:
   - component: {fileID: 2128865145}
   - component: {fileID: 2128865144}
   m_Layer: 5
-  m_Name: BuyShieldPerkButton
+  m_Name: BuyGhostPerkButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2936,7 +2936,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: ShieldPerk
+          m_StringArgument: GhostPerk
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2128865145
