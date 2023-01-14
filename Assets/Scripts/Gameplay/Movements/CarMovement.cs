@@ -16,6 +16,11 @@ public class CarMovement : MonoBehaviour
         SameDirection = transform.position.x >= 0;
     }
 
+    public void SetSpeed(float directionSpeed)
+    {
+        
+    }
+
     void Update()
     {
         transform.position -= new Vector3(0, Speed * Time.deltaTime, 0);

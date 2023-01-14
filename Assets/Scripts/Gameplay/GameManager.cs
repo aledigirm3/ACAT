@@ -7,6 +7,8 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject Bus;
+
     //STATS
     public int Coins;
     public int Pedoni;
@@ -16,9 +18,6 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI PedoniText;
     public TextMeshProUGUI PedoniInGameOverText;
     public TextMeshProUGUI MaxPedoniText;
-    public TextMeshProUGUI PerkMultiplierTimeLeftText;
-    public Button Shield;
-    public Button Multiplier;
     public Button Pause;
     public Button Close;
 
@@ -26,11 +25,7 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverPanel;
     public GameObject PausePanel;
     public GameObject GameplayPanel;
-
-    //PERKS
-    public bool PerkMultiplierActivated;
-    public float PerkMultiplierDuration;
-    public float PerkMultiplierTimeLeft;
+    public GameObject PerkManager;
 
     //GAME MANAGEMENT
     public bool GamePaused;
@@ -48,15 +43,6 @@ public class GameManager : MonoBehaviour
 
         GameOverPanel.SetActive(false);
         PausePanel.SetActive(false);
-
-        PerkMultiplierTimeLeftText.gameObject.SetActive(false);
-        PerkMultiplierTimeLeftText.text = PerkMultiplierDuration.ToString();
-    }
-
-    void SetupPerks()
-    {
-        PerkMultiplierActivated = false;
-        PerkMultiplierTimeLeft = PerkMultiplierDuration;
     }
 
     void Start()
@@ -66,29 +52,9 @@ public class GameManager : MonoBehaviour
         Difficulty = 1;
         GamePaused = false;
         Gameover = false;
-        SetupPerks();
         SetupUI();
         Time.timeScale = 1;
         coroutine = StartCoroutine(IncreaseDifficulty());
-    }
-
-    void Update()
-    {
-        if (!GamePaused)
-        {
-            if (PerkMultiplierActivated)
-            {
-                PerkMultiplierTimeLeftText.text = (Mathf.Ceil(PerkMultiplierTimeLeft)).ToString();
-                PerkMultiplierTimeLeft -= Time.deltaTime;
-                if (PerkMultiplierTimeLeft <= 0)
-                {
-                    PerkMultiplierActivated = false;
-                    PerkMultiplierTimeLeft = PerkMultiplierDuration;
-                    PerkMultiplierTimeLeftText.gameObject.SetActive(false);
-                    PerkMultiplierTimeLeftText.text = PerkMultiplierDuration.ToString();
-                }
-            }
-        }
     }
 
     //Controllo di collisioni "friendly" aventi comportamenti simili
@@ -101,7 +67,7 @@ public class GameManager : MonoBehaviour
         }
         else if (obj.tag == "Pedone")
         {
-            if (PerkMultiplierActivated)
+            if (PerkManager.GetComponent<MultiplierPerk>().IsActivated)
                 Pedoni += 2;
             else    
                 Pedoni += 1;
@@ -112,8 +78,8 @@ public class GameManager : MonoBehaviour
 
     public void TogglePerks(bool value)
     {
-        Shield.gameObject.SetActive(value);
-        Multiplier.gameObject.SetActive(value);
+        PerkManager.GetComponent<MultiplierPerk>().Toggle(value);
+        PerkManager.GetComponent<GhostPerk>().Toggle(value);
     }
 
     public void OnGameOver()
@@ -122,8 +88,8 @@ public class GameManager : MonoBehaviour
         Gameover = true;
 
         //Deattivo i perk
-        PerkMultiplierActivated = false;
-        PerkMultiplierTimeLeft = 0f;
+        PerkManager.GetComponent<MultiplierPerk>().Deactivate();
+        PerkManager.GetComponent<GhostPerk>().Deactivate();
 
         //Rimuovo elementi UI di Gameplay
         Close.gameObject.SetActive(false);
@@ -167,15 +133,6 @@ public class GameManager : MonoBehaviour
     public void MainMenu()
     {
         SceneManager.LoadScene("Menu");
-    }
-
-    public void ActivatePerkMultiplier()
-    {
-        if (!PerkMultiplierActivated)
-        {
-            PerkMultiplierTimeLeftText.gameObject.SetActive(true);
-            PerkMultiplierActivated = true;
-        } 
     }
 
     IEnumerator IncreaseDifficulty()

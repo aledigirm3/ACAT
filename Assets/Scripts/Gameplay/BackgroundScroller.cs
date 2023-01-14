@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class BackgroundScroller : MonoBehaviour
 {
-    public float SpeedIncreaser;
+    public float SpeedFactorIncreaser;
     public float Speed;
     public GameManager GameManager;
-
-    [SerializeField]
-    private Renderer bgRenderer;
+    public Renderer BackgroundRenderer;
 
     void Update()
     {
-        Speed = (Mathf.Sqrt(GameManager.Difficulty) / 2) * SpeedIncreaser;
-        bgRenderer.material.mainTextureOffset += new Vector2(0, (Speed * Time.deltaTime));
+        Speed = (Mathf.Sqrt(GameManager.Difficulty) / 2) * SpeedFactorIncreaser;
+        BackgroundRenderer.material.mainTextureOffset += new Vector2(0, (Speed * Time.deltaTime));
     }
 }

@@ -7,40 +7,40 @@ using TMPro;
 public class Bus : MonoBehaviour
 {
     //MOVIMENTO
-    private Rigidbody2D carRigidbody;
-    public bool moveLeft;
-    public bool moveRight;
-    public float horizontalMove;
-    public float speed = 5;
-    public float rotation = 3;
-    public float rotationSpeed = 5;
+    private Rigidbody2D CarRigidbody;
+    public bool IsMovingLeft;
+    public bool IsMovingRight;
+    public float HorizontalSpeed;
+    public float Speed;
+    public float Rotation;
 
     //GAMEMANAGER
-    public GameManager gameManager;
+    public GameManager GameManagerObj;
+    public GameObject PerkManagerObj;
 
 
     void Start()
     {
-        carRigidbody = GetComponent<Rigidbody2D>();
-        moveLeft = false;
-        moveRight = false;
+        CarRigidbody = GetComponent<Rigidbody2D>();
+        IsMovingLeft = false;
+        IsMovingRight = false;
     }
 
     //===============================================================
     public void PointerUpLeft(){
-        moveLeft = false;
+        IsMovingLeft = false;
     }
 
     public void PointerDownLeft(){
-        moveLeft = true;
+        IsMovingLeft = true;
     }
 
     public void PointerUpRight(){
-        moveRight = false;
+        IsMovingRight = false;
     }
 
     public void PointerDownRight(){
-        moveRight = true;
+        IsMovingRight = true;
     }
     //===============================================================
 
@@ -51,20 +51,20 @@ public class Bus : MonoBehaviour
 
     private void Move()
     {
-        if(moveLeft && carRigidbody.position.x >= -2.81f)
+        if(IsMovingLeft && CarRigidbody.position.x >= -2.81f)
         {
-            carRigidbody.rotation = rotation;
-            horizontalMove = -speed;
+            CarRigidbody.rotation = Rotation;
+            HorizontalSpeed = -Speed;
         }
-        else if(moveRight && carRigidbody.position.x <= 2.8f)
+        else if(IsMovingRight && CarRigidbody.position.x <= 2.8f)
         {
-            carRigidbody.rotation = -rotation;
-            horizontalMove = speed;
+            CarRigidbody.rotation = -Rotation;
+            HorizontalSpeed = Speed;
         }
         else
         {
-            carRigidbody.rotation = 0;
-            horizontalMove = 0;
+            CarRigidbody.rotation = 0;
+            HorizontalSpeed = 0;
         }
     }
 
@@ -72,7 +72,8 @@ public class Bus : MonoBehaviour
     {
         if (collision.gameObject.tag == "Car")
         {
-            gameManager.OnGameOver();
+            if (!PerkManagerObj.GetComponent<GhostPerk>().IsActivated)
+                GameManagerObj.OnGameOver();
         }
         else if (collision.gameObject.tag == "Border")
         {
@@ -81,13 +82,13 @@ public class Bus : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Coin" || collision.gameObject.tag == "Pedone")
         {
-            gameManager.FriendlyCollision(collision.gameObject);
+            GameManagerObj.FriendlyCollision(collision.gameObject);
         }
     }
 
     private void FixedUpdate()
     {
-        carRigidbody.velocity = new Vector2(horizontalMove, carRigidbody.velocity.y);
+        CarRigidbody.velocity = new Vector2(HorizontalSpeed, CarRigidbody.velocity.y);
     }
 
 }

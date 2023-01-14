@@ -13,8 +13,8 @@ public class CarSpawner : MonoBehaviour
 
     void Start()
     {
-        SpeedOppositeDirection = 2.5f;
-        SpeedSameDirection = 1.8f;
+        SpeedOppositeDirection = 3f;
+        SpeedSameDirection = 1f;
         StartCoroutine(SpawnCars());
     }
 
@@ -24,7 +24,12 @@ public class CarSpawner : MonoBehaviour
         int randPosition = Random.Range(0, xPositions.Length);
         float xPosition = xPositions[randPosition];
         GameObject carObj = Instantiate(car[randCar], new Vector2(xPosition, transform.position.y), Quaternion.Euler(0,0, (xPosition > 0 ? 90 : -90)));
-        carObj.GetComponent<CarMovement>().Speed = ((xPosition > 0) ? SpeedSameDirection : SpeedOppositeDirection) * ((float)Mathf.Sqrt(GameManagerObj.Difficulty));
+        if (xPosition > 0)
+        {
+            carObj.GetComponent<CarMovement>().Speed = SpeedSameDirection * ((float)Mathf.Sqrt(GameManagerObj.Difficulty));
+        }
+        else
+            carObj.GetComponent<CarMovement>().Speed = SpeedOppositeDirection * ((float)Mathf.Sqrt(GameManagerObj.Difficulty/2));
     }
 
     IEnumerator SpawnCars()

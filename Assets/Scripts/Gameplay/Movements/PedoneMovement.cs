@@ -14,9 +14,16 @@ public class PedoneMovement : MonoBehaviour
         transform.GetComponent<Transform>();
     }
 
+    public void SetupPedone(float stradaSpeed, float xPosition, float yPosition, GameObject bus)
+    {
+        Bus = bus;
+        Speed = stradaSpeed * 20;
+        transform.position = new Vector3(xPosition, yPosition, 0f);
+        transform.localScale = new Vector3(0.1f, 0.1f, 1f);
+    }
+
     void Update()
     {
-        print(Vector3.Distance(Bus.GetComponent<Transform>().position, transform.position));
         if (Vector3.Distance(Bus.GetComponent<Transform>().position, transform.position) <= 1.5f)
         {
             transform.position = Vector3.MoveTowards(transform.position, Bus.GetComponent<Transform>().position, Speed * Time.deltaTime);
