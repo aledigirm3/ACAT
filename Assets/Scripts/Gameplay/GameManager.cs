@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,7 +41,6 @@ public class GameManager : MonoBehaviour
     public AudioSource ButtonMusic;
     public AudioSource PedoniMusic;
     public AudioSource CoinSound;
-
 
     private Coroutine coroutine;
 
@@ -102,11 +103,32 @@ public class GameManager : MonoBehaviour
         PerkManager.GetComponent<GhostPerk>().Toggle(value);
     }
 
+    private void SendRequestOnGameOver()
+    {
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
+            {
+                { "Money", (PlayerPrefs.GetInt("Money") + Coins).ToString() }
+            }
+        };
+        PlayFabClientAPI.UpdateUserData(
+            request,
+            result =>
+            {
+                PlayFabClientAPI.GetUserData(
+                    new GetUserDataRequest(),
+                    result => PlayerPrefs.SetInt("Money", int.Parse(result.Data["Money"].Value)),
+                    error => Debug.Log(error.ErrorMessage));
+            },
+            error => Debug.Log(error.ErrorMessage));
+    }
+
     public void OnGameOver()
     {
         Time.timeScale = 0;
         Gameover = true;
-         GameMusic.Stop();
+        GameMusic.Stop();
 
         //Deattivo i perk
         PerkManager.GetComponent<MultiplierPerk>().Deactivate();
@@ -116,11 +138,11 @@ public class GameManager : MonoBehaviour
         Close.gameObject.SetActive(false);
         GameplayPanel.SetActive(false);
 
-        //Salvo il nuovo punteggio pi� alto e aggiungo le monete raccolte
+        //Salvo il nuovo punteggio più alto e aggiungo le monete raccolte
         playfabManager.SendLeaderboard(Pedoni);
         if (Pedoni > PlayerPrefs.GetInt("Highscore"))
             PlayerPrefs.SetInt("Highscore", Pedoni);
-        PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") + Coins);
+        SendRequestOnGameOver();
 
         //Setup UI di Gameover
         MaxPedoniText.text = ("HIGHEST SCORE: " + PlayerPrefs.GetInt("Highscore").ToString());

@@ -7,13 +7,17 @@ using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
-    public TextMeshProUGUI Highscore;
-    public TextMeshProUGUI Money;
+    public static string Username;
+
+    public TextMeshProUGUI HighscoreText;
+    public TextMeshProUGUI MoneyText;
+    public TextMeshProUGUI UsernameText;
     public Button MusicButton;
     public Button MuteMusicButton;
     public Button SoundButton;
     public Button MuteSoundButton;
 
+    public PlayfabManager playfabManager;
 
     public AudioSource MenuMusic;
     public AudioSource ButtonMusic;
@@ -26,20 +30,13 @@ public class MainMenu : MonoBehaviour
             PlayerPrefs.SetInt("Sound", 1);
         if (!PlayerPrefs.HasKey("Highscore"))
             PlayerPrefs.SetInt("Highscore", 0);
-        if (!PlayerPrefs.HasKey("Money")) 
-            PlayerPrefs.SetInt("Money", 150);
-        if (!PlayerPrefs.HasKey("MultiplierPerk"))
-            PlayerPrefs.SetInt("MultiplierPerk", 0);
-        if (!PlayerPrefs.HasKey("GhostPerk"))
-            PlayerPrefs.SetInt("GhostPerk", 0);
     }
 
     private void Setup()
     {
         ButtonMusic.Stop();
-        
-        Money.text = PlayerPrefs.GetInt("Money").ToString();
-        Highscore.text = PlayerPrefs.GetInt("Highscore").ToString();
+        MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
+        HighscoreText.text = PlayerPrefs.GetInt("Highscore").ToString();
 
         if (PlayerPrefs.GetInt("Music") == 1)
             MusicOn();
@@ -55,13 +52,14 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
+        UsernameText.text = "Logged in as: " + Username;
         FirstStart();
         Setup();
     }
 
     void Update()
     {
-        Highscore.text = ("HIGH SCORE: " + PlayerPrefs.GetInt("Highscore").ToString());
+        HighscoreText.text = ("HIGH SCORE: " + PlayerPrefs.GetInt("Highscore").ToString());
     }
 
     public void PlayGame()

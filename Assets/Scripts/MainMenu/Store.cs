@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public class Store : MonoBehaviour
 {
-
+    public PlayfabManager playfabManager;
+    
     public TextMeshProUGUI MoneyText;
     public TextMeshProUGUI MultiplierPerkCounter;
     public TextMeshProUGUI GhostPerkCounter;
@@ -19,6 +22,7 @@ public class Store : MonoBehaviour
     public GameObject NoMoneyWindow;
     public GameObject DialoguePanel;
 
+    public AudioSource BackgroundMusic;
     public AudioSource ButtonMusic;
 
 
@@ -38,7 +42,11 @@ public class Store : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-         ButtonMusic.Stop();
+        ButtonMusic.Stop();
+        if (PlayerPrefs.GetInt("Music") == 1)
+            BackgroundMusic.Play();
+        else
+            BackgroundMusic.Stop();
         MultiplierPerkPrice = 10;
         GhostPerkPrice = 30;
         MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
@@ -59,6 +67,36 @@ public class Store : MonoBehaviour
         }
     }
 
+    private void SendRequestBuyPerk(string perkName, int perkPrice, TextMeshProUGUI perkCounter)
+    {
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
+            {
+                { perkName, (PlayerPrefs.GetInt(perkName) + 1).ToString() },
+                { "Money", (PlayerPrefs.GetInt("Money") - perkPrice).ToString() }
+            }
+        };
+        PlayFabClientAPI.UpdateUserData(
+            request,
+            result =>
+            {
+                PlayFabClientAPI.GetUserData(
+                    new GetUserDataRequest(), 
+                    result =>
+                    {
+                        PlayerPrefs.SetInt("Money", int.Parse(result.Data["Money"].Value));
+                        MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
+
+                        PlayerPrefs.SetInt(perkName, int.Parse(result.Data[perkName].Value));
+                        perkCounter.text = PlayerPrefs.GetInt(perkName).ToString() + "/5";
+                        CheckIfPerkLimitHasReached();
+                    },
+                    error => Debug.Log(error.ErrorMessage));
+            },
+            error => Debug.Log(error.ErrorMessage));
+    }
+
     public void BuyPerk(string perkName)
     {
         ButtonMusic.Play();
@@ -69,13 +107,7 @@ public class Store : MonoBehaviour
         {
             if (PlayerPrefs.GetInt(perkName) < 5)
             {
-                //BUYWINDOW
-
-                PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") - perkPrice);
-                PlayerPrefs.SetInt(perkName, PlayerPrefs.GetInt(perkName) + 1);
-                MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
-                perkCounter.text = PlayerPrefs.GetInt(perkName).ToString() + "/5";
-                CheckIfPerkLimitHasReached();
+                SendRequestBuyPerk(perkName, perkPrice, perkCounter);
             }
             else
             {

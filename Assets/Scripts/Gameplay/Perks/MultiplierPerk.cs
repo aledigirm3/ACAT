@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public class MultiplierPerk : MonoBehaviour
 {
@@ -71,6 +73,38 @@ public class MultiplierPerk : MonoBehaviour
         TimeLeft = 0f;
     }
 
+    private void SendRequesteUsePerk()
+    {
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
+            {
+                { "MultiplierPerk", (PlayerPrefs.GetInt("MultiplierPerk") - 1).ToString() }
+            }
+        };
+        PlayFabClientAPI.UpdateUserData(
+            request,
+            result =>
+            {
+                PlayFabClientAPI.GetUserData(
+                    new GetUserDataRequest(),
+                    result =>
+                    {
+                        Available[PlayerPrefs.GetInt("MultiplierPerk") - 1].gameObject.SetActive(false);
+                        PlayerPrefs.SetInt("MultiplierPerk", int.Parse(result.Data["MultiplierPerk"].Value));
+                        if (PlayerPrefs.GetInt("MultiplierPerk") == 0)
+                        {
+                            UIButton.GetComponent<Image>().color = new Color(1, 1, 1, 0.2f);
+                        }
+                        UITimeLeftText.gameObject.SetActive(true);
+                        IsActivated = true;
+                    },
+                    error => Debug.Log(error.ErrorMessage));
+            },
+            error => Debug.Log(error.ErrorMessage));
+    }
+
+
     public void Activate()
     {
         if (PlayerPrefs.GetInt("MultiplierPerk") > 0)
@@ -78,14 +112,7 @@ public class MultiplierPerk : MonoBehaviour
             if (!IsActivated)
             {
                 ButtonMusic.Play();
-                Available[PlayerPrefs.GetInt("MultiplierPerk") - 1].gameObject.SetActive(false);
-                PlayerPrefs.SetInt("MultiplierPerk", PlayerPrefs.GetInt("MultiplierPerk") - 1);
-                if (PlayerPrefs.GetInt("MultiplierPerk") == 0)
-                {
-                    UIButton.GetComponent<Image>().color = new Color(1, 1, 1, 0.2f);
-                }
-                UITimeLeftText.gameObject.SetActive(true);
-                IsActivated = true;
+                SendRequesteUsePerk();
             }
         }
     }

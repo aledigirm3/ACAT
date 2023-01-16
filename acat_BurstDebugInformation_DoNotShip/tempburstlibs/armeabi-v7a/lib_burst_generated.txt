@@ -133,6 +133,7 @@ Library: lib_burst_generated
 --root-assembly=C:\Users\Davide\Desktop\ACAT\Temp\StagingArea\Data\Managed\Unity.Services.Core.Telemetry.dll
 --root-assembly=C:\Users\Davide\Desktop\ACAT\Temp\StagingArea\Data\Managed\Unity.VisualScripting.State.dll
 --root-assembly=C:\Users\Davide\Desktop\ACAT\Temp\StagingArea\Data\Managed\Unity.VisualScripting.Core.dll
+--root-assembly=C:\Users\Davide\Desktop\ACAT\Temp\StagingArea\Data\Managed\PlayFab.dll
 --root-assembly=C:\Users\Davide\Desktop\ACAT\Temp\StagingArea\Data\Managed\Unity.Services.Core.Environments.Internal.dll
 --root-assembly=C:\Users\Davide\Desktop\ACAT\Temp\StagingArea\Data\Managed\Unity.Burst.dll
 --root-assembly=C:\Users\Davide\Desktop\ACAT\Temp\StagingArea\Data\Managed\Unity.2D.Animation.Runtime.dll

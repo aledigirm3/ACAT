@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public class GhostPerk : MonoBehaviour
 {
@@ -75,22 +77,45 @@ public class GhostPerk : MonoBehaviour
         GameManagerObj.Bus.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
     }
 
+    private void SendRequesteUsePerk()
+    {
+        var request = new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string>
+            {
+                { "GhostPerk", (PlayerPrefs.GetInt("GhostPerk") - 1).ToString() }
+            }
+        };
+        PlayFabClientAPI.UpdateUserData(
+            request,
+            result =>
+            {
+                PlayFabClientAPI.GetUserData(
+                    new GetUserDataRequest(),
+                    result =>
+                    {
+                        Available[PlayerPrefs.GetInt("GhostPerk") - 1].gameObject.SetActive(false);
+                        PlayerPrefs.SetInt("GhostPerk", int.Parse(result.Data["GhostPerk"].Value));
+                        if (PlayerPrefs.GetInt("GhostPerk") == 0)
+                        {
+                            UIButton.GetComponent<Image>().color = new Color(1, 1, 1, 0.2f);
+                        }
+                        UITimeLeftText.gameObject.SetActive(true);
+                        GameManagerObj.Bus.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
+                        IsActivated = true;
+                    },
+                    error => Debug.Log(error.ErrorMessage));
+            },
+            error => Debug.Log(error.ErrorMessage));
+    }
+
     public void Activate()
     {
         if (PlayerPrefs.GetInt("GhostPerk") > 0)
         {
             if (!IsActivated)
             {
-                ButtonMusic.Play();
-                Available[PlayerPrefs.GetInt("GhostPerk") - 1].gameObject.SetActive(false);
-                PlayerPrefs.SetInt("GhostPerk", PlayerPrefs.GetInt("GhostPerk") - 1);
-                if (PlayerPrefs.GetInt("GhostPerk") == 0)
-                {
-                    UIButton.GetComponent<Image>().color = new Color(1, 1, 1, 0.2f);
-                }
-                UITimeLeftText.gameObject.SetActive(true);
-                GameManagerObj.Bus.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
-                IsActivated = true;
+                SendRequesteUsePerk();
             }
         }
     }
