@@ -8,6 +8,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public GameObject Bus;
+    public PlayfabManager playfabManager;
 
     //STATS
     public int Coins;
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviour
     public AudioSource GameMusic;
     public AudioSource ButtonMusic;
     public AudioSource PedoniMusic;
+    public AudioSource CoinSound;
 
 
     private Coroutine coroutine;
@@ -62,10 +64,12 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         coroutine = StartCoroutine(IncreaseDifficulty());
 
-        if(PlayerPrefs.GetInt("Music") == 1){
+        if(PlayerPrefs.GetInt("Music") == 1)
+        {
             GameMusic.Play();
         }
-        else{
+        else
+        {
             GameMusic.Stop();
         }
 
@@ -76,6 +80,7 @@ public class GameManager : MonoBehaviour
     {
         if (obj.tag == "Coin")
         {
+            CoinSound.Play();
             Coins += 1;
             CoinsText.text = Coins.ToString();
         }
@@ -112,6 +117,7 @@ public class GameManager : MonoBehaviour
         GameplayPanel.SetActive(false);
 
         //Salvo il nuovo punteggio pi� alto e aggiungo le monete raccolte
+        playfabManager.SendLeaderboard(Pedoni);
         if (Pedoni > PlayerPrefs.GetInt("Highscore"))
             PlayerPrefs.SetInt("Highscore", Pedoni);
         PlayerPrefs.SetInt("Money", PlayerPrefs.GetInt("Money") + Coins);

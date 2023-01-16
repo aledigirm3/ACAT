@@ -78,7 +78,6 @@ public class MainMenu : MonoBehaviour
 
     public void MusicOn()
     {
-        
         MenuMusic.Play();
         PlayerPrefs.SetInt("Music", 1);
         MuteMusicButton.gameObject.SetActive(false);

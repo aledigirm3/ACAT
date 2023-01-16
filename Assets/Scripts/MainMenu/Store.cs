@@ -19,8 +19,6 @@ public class Store : MonoBehaviour
     public GameObject NoMoneyWindow;
     public GameObject DialoguePanel;
 
-
-    public AudioSource GameMusic;
     public AudioSource ButtonMusic;
 
 
@@ -47,13 +45,6 @@ public class Store : MonoBehaviour
         MultiplierPerkCounter.text = PlayerPrefs.GetInt("MultiplierPerk").ToString() + "/5";
         GhostPerkCounter.text = PlayerPrefs.GetInt("GhostPerk").ToString() + "/5";
         CheckIfPerkLimitHasReached();
-           if(PlayerPrefs.GetInt("Music") == 1){
-            GameMusic.Play();
-        }
-        else{
-            GameMusic.Stop();
-        }
-
     }
 
     public void CheckIfPerkLimitHasReached()
