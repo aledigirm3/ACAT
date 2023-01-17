@@ -107,13 +107,14 @@ public class AudioManager : MonoBehaviour
     public void PlayBackgroundMenuMusic()
     {
         if (PlayerPrefs.GetInt("Music") == 1)
-            BackgroundMenuMusic.Play();
+            if (!BackgroundMusic.instance.gameObject.GetComponent<AudioSource>().isPlaying)
+                BackgroundMusic.instance.gameObject.GetComponent<AudioSource>().Play();
     }
 
     public void PauseBackgroundMenuMusic()
     {
         if (PlayerPrefs.GetInt("Music") == 1)
-            BackgroundMenuMusic.Pause();
+            BackgroundMusic.instance.gameObject.GetComponent<AudioSource>().Pause();
     }
 
     public void PlayBackgroundGameplayMusic()
