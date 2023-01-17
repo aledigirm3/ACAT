@@ -8,7 +8,7 @@ using PlayFab.ClientModels;
 
 public class Store : MonoBehaviour
 {
-    public PlayfabManager playfabManager;
+    public AudioManager audioManager;
     
     public TextMeshProUGUI MoneyText;
     public TextMeshProUGUI MultiplierPerkCounter;
@@ -21,9 +21,6 @@ public class Store : MonoBehaviour
     public GameObject LimitReachedWindow;
     public GameObject NoMoneyWindow;
     public GameObject DialoguePanel;
-
-    public AudioSource BackgroundMusic;
-    public AudioSource ButtonMusic;
 
 
     private void DeactiveWholeDialoguePanel()
@@ -39,14 +36,8 @@ public class Store : MonoBehaviour
         DeactiveWholeDialoguePanel();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        ButtonMusic.Stop();
-        if (PlayerPrefs.GetInt("Music") == 1)
-            BackgroundMusic.Play();
-        else
-            BackgroundMusic.Stop();
         MultiplierPerkPrice = 10;
         GhostPerkPrice = 30;
         MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
@@ -99,7 +90,7 @@ public class Store : MonoBehaviour
 
     public void BuyPerk(string perkName)
     {
-        ButtonMusic.Play();
+        audioManager.PlayButtonSound();
         int perkPrice = (perkName == "MultiplierPerk") ? MultiplierPerkPrice : GhostPerkPrice;
         TextMeshProUGUI perkCounter = (perkName == "MultiplierPerk") ? MultiplierPerkCounter : GhostPerkCounter;
 
@@ -124,13 +115,13 @@ public class Store : MonoBehaviour
 
     public void GoToMainMenu()
     {
-         ButtonMusic.Play();
+        audioManager.PlayButtonSound();
         SceneManager.LoadScene("Menu");
     }
 
     public void CloseDialogueWindow()
     {
-        ButtonMusic.Play();
+        audioManager.PlayButtonSound();
         DeactiveWholeDialoguePanel();
     }
 

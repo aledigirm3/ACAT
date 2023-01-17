@@ -4,103 +4,95 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public class MainMenu : MonoBehaviour
 {
+    public PlayfabManager playfabManager;
+    public AudioManager audioManager;
+
     public static string Username;
 
     public TextMeshProUGUI HighscoreText;
     public TextMeshProUGUI MoneyText;
-    public TextMeshProUGUI UsernameText;
-    public Button MusicButton;
-    public Button MuteMusicButton;
-    public Button SoundButton;
-    public Button MuteSoundButton;
 
-    public PlayfabManager playfabManager;
-
-    public AudioSource MenuMusic;
-    public AudioSource ButtonMusic;
-
-    private void FirstStart()
-    {
-        if (!PlayerPrefs.HasKey("Music"))
-            PlayerPrefs.SetInt("Music", 1);
-        if (!PlayerPrefs.HasKey("Sound"))
-            PlayerPrefs.SetInt("Sound", 1);
-        if (!PlayerPrefs.HasKey("Highscore"))
-            PlayerPrefs.SetInt("Highscore", 0);
-    }
-
-    private void Setup()
-    {
-        ButtonMusic.Stop();
-        MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
-        HighscoreText.text = PlayerPrefs.GetInt("Highscore").ToString();
-
-        if (PlayerPrefs.GetInt("Music") == 1)
-            MusicOn();
-        else
-            MusicOff();
-
-        if (PlayerPrefs.GetInt("Sound") == 1)
-            SoundOn();
-        else
-            SoundOff();
-    }
+    //### LEADERBOARD ###//
+    public GameObject LeaderboardPanel;
+    public GameObject LeaderboardRowPrefab;
+    public Transform LeaderboardRowsParent;
 
     void Start()
     {
         Application.targetFrameRate = 60;
-        UsernameText.text = "Logged in as: " + Username;
-        FirstStart();
-        Setup();
-    }
-
-    void Update()
-    {
-        HighscoreText.text = ("HIGH SCORE: " + PlayerPrefs.GetInt("Highscore").ToString());
+        MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
+        HighscoreText.text = "HIGHSCORE: " + PlayerPrefs.GetInt("Highscore").ToString();
     }
 
     public void PlayGame()
     {
-        ButtonMusic.Play();
+        audioManager.PlayButtonSound();
         SceneManager.LoadScene("Game");
     }
 
     public void OpenStore()
     {
-        ButtonMusic.Play();
+        audioManager.PlayButtonSound();
         SceneManager.LoadScene("Store");
     }
 
-    public void MusicOn()
+    public void OpenLeaderboard()
     {
-        MenuMusic.Play();
-        PlayerPrefs.SetInt("Music", 1);
-        MuteMusicButton.gameObject.SetActive(false);
-        MusicButton.gameObject.SetActive(true);
+        audioManager.PlayButtonSound();
+        var request = new GetLeaderboardRequest
+        {
+            StatisticName = "PedoniLeaderboard",
+            StartPosition = 0,
+            MaxResultsCount = 10
+        };
+        PlayFabClientAPI.GetLeaderboard(
+            request,
+            result =>
+            {
+                foreach (var item in result.Leaderboard)
+                {
+                    if (item.DisplayName != null)
+                    {
+                        //Istanzia row nella leaderboard
+                        GameObject newGo = Instantiate(LeaderboardRowPrefab, LeaderboardRowsParent);
+                        TextMeshProUGUI[] texts = newGo.GetComponentsInChildren<TextMeshProUGUI>();
+
+                        //Inserisci dati nella row della leaderboard
+                        texts[0].text = (item.Position + 1).ToString();
+                        texts[1].text = item.DisplayName;
+                        texts[2].text = item.StatValue.ToString();
+
+                        //Se il giocatore è l'utente connesso, cambia il colore della row
+                        if (item.DisplayName == MainMenu.Username)
+                        {
+                            texts[0].color = Color.yellow;
+                            texts[1].color = Color.yellow;
+                            texts[2].color = Color.yellow;
+                        }
+                    }
+                }
+                //Mostra la leaderboard
+                LeaderboardPanel.gameObject.SetActive(true);
+            },
+            error =>
+            {
+                Debug.Log(error.ErrorMessage);
+            });
     }
 
-    public void MusicOff()
+    public void CloseLeaderboard()
     {
-        PlayerPrefs.SetInt("Music", 0);
-        MusicButton.gameObject.SetActive(false);
-        MuteMusicButton.gameObject.SetActive(true);
-        MenuMusic.Pause();
-    }
-
-    public void SoundOn()
-    {
-        PlayerPrefs.SetInt("Sound", 1);
-        MuteSoundButton.gameObject.SetActive(false);
-        SoundButton.gameObject.SetActive(true);
-    }
-    
-    public void SoundOff()
-    {
-        PlayerPrefs.SetInt("Sound", 0);
-        SoundButton.gameObject.SetActive(false);
-        MuteSoundButton.gameObject.SetActive(true);
+        audioManager.PlayButtonSound();
+        //Rimuovi eventuali dati precedenti dalla leaderboard
+        foreach (Transform item in LeaderboardRowsParent)
+        {
+            Destroy(item.gameObject);
+        }
+        LeaderboardPanel.gameObject.SetActive(false);
     }
 }

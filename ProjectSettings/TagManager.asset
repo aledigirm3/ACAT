@@ -10,6 +10,7 @@ TagManager:
   - Pedone
   - PedoniMagnet
   - Bus
+  - MenuMusic
   layers:
   - Default
   - TransparentFX

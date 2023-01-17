@@ -591,7 +591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 869c18f83b5081c47a78c7a7dea4aa34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playfabManager: {fileID: 1110954543}
+  audioManager: {fileID: 1110954544}
   MoneyText: {fileID: 1166283632}
   MultiplierPerkCounter: {fileID: 915709503}
   GhostPerkCounter: {fileID: 454662170}
@@ -601,8 +601,6 @@ MonoBehaviour:
   LimitReachedWindow: {fileID: 1329607120}
   NoMoneyWindow: {fileID: 64465056}
   DialoguePanel: {fileID: 1325774382}
-  BackgroundMusic: {fileID: 643677962}
-  ButtonMusic: {fileID: 1409820659}
 --- !u!1 &429948445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,9 +1031,10 @@ GameObject:
   m_Component:
   - component: {fileID: 643677963}
   - component: {fileID: 643677962}
+  - component: {fileID: 643677964}
   m_Layer: 0
-  m_Name: BackgroundMusic
-  m_TagString: Untagged
+  m_Name: BackgroundMenuMusic
+  m_TagString: MenuMusic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1051,8 +1050,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 1f2ad53bacc245642854dbdc8ea71a9b, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_PlayOnAwake: 0
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -1151,6 +1150,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &643677964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643677960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d43cf10fb41e30488a4807bafb12c2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &673609193
 GameObject:
   m_ObjectHideFlags: 0
@@ -1600,6 +1611,7 @@ GameObject:
   - component: {fileID: 1110954541}
   - component: {fileID: 1110954540}
   - component: {fileID: 1110954543}
+  - component: {fileID: 1110954544}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1685,9 +1697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a32a6c4d43ec79c4ebe3d7bd747eec70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoneyText: {fileID: 1166283632}
-  MultiplierPerkText: {fileID: 915709503}
-  GhostPerkText: {fileID: 454662170}
+  audioManager: {fileID: 0}
   MessageText: {fileID: 0}
   emailInput: {fileID: 0}
   usernameInput: {fileID: 0}
@@ -1699,6 +1709,27 @@ MonoBehaviour:
   IsLogginIn: 0
   IsSigninUp: 0
   IsResettingPassword: 0
+--- !u!114 &1110954544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1110954539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5d0bd6861bf67438904c1f91cfcf48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MusicButton: {fileID: 0}
+  MuteMusicButton: {fileID: 0}
+  SoundButton: {fileID: 0}
+  MuteSoundButton: {fileID: 0}
+  BackgroundMenuMusic: {fileID: 643677962}
+  BackgroundGameplayMusic: {fileID: 0}
+  ButtonSound: {fileID: 1409820659}
+  CoinSound: {fileID: 0}
+  PedoneSound: {fileID: 0}
 --- !u!1 &1166283630
 GameObject:
   m_ObjectHideFlags: 0
@@ -2346,7 +2377,7 @@ GameObject:
   - component: {fileID: 1409820660}
   - component: {fileID: 1409820659}
   m_Layer: 0
-  m_Name: ButtonMusic
+  m_Name: ButtonSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2363,7 +2394,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5ed9970e17bfee943a6dff056dc3a9d0, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

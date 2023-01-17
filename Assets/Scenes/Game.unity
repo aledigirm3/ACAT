@@ -411,7 +411,7 @@ GameObject:
   - component: {fileID: 78965805}
   - component: {fileID: 78965804}
   m_Layer: 0
-  m_Name: ButtonMusicManager
+  m_Name: ButtonSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -428,7 +428,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 5ed9970e17bfee943a6dff056dc3a9d0, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -1179,6 +1179,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420033}
+  - component: {fileID: 519420034}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1264,6 +1265,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a32a6c4d43ec79c4ebe3d7bd747eec70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RowPrefab: {fileID: 0}
+  RowsParent: {fileID: 0}
+  LeaderboardPanel: {fileID: 0}
+  MoneyText: {fileID: 0}
+  HighscoreText: {fileID: 0}
+  MultiplierPerkText: {fileID: 0}
+  GhostPerkText: {fileID: 0}
+  MessageText: {fileID: 0}
+  emailInput: {fileID: 0}
+  usernameInput: {fileID: 0}
+  passwordInput: {fileID: 0}
+  LoginButton: {fileID: 0}
+  SignupButton: {fileID: 0}
+  ForgotPasswordButton: {fileID: 0}
+  BackButton: {fileID: 0}
+  IsLogginIn: 0
+  IsSigninUp: 0
+  IsResettingPassword: 0
+  ButtonSound: {fileID: 0}
+--- !u!114 &519420034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d5d0bd6861bf67438904c1f91cfcf48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MusicButton: {fileID: 0}
+  MuteMusicButton: {fileID: 0}
+  SoundButton: {fileID: 0}
+  MuteSoundButton: {fileID: 0}
+  BackgroundMenuMusic: {fileID: 0}
+  BackgroundGameplayMusic: {fileID: 869480220}
+  ButtonSound: {fileID: 78965804}
+  CoinSound: {fileID: 1660256606}
+  PedoneSound: {fileID: 664985512}
 --- !u!1 &528836814
 GameObject:
   m_ObjectHideFlags: 0
@@ -1620,7 +1661,7 @@ GameObject:
   - component: {fileID: 664985513}
   - component: {fileID: 664985512}
   m_Layer: 0
-  m_Name: PedoniMusicManager
+  m_Name: PedoniSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1637,7 +1678,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 70e02441ad3cd8f488092b6a4933e446, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2259,7 +2300,7 @@ GameObject:
   - component: {fileID: 869480221}
   - component: {fileID: 869480220}
   m_Layer: 0
-  m_Name: BackgroundMusic
+  m_Name: BackgroundGameplayMusic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2276,8 +2317,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fc5af015011ea3745b7f78ea1dd1049f, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.5
+  m_PlayOnAwake: 0
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2388,7 +2429,7 @@ GameObject:
   - component: {fileID: 898335299}
   - component: {fileID: 898335298}
   m_Layer: 5
-  m_Name: MaxPedoni
+  m_Name: HighscoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3461,12 +3502,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Bus: {fileID: 1935113265}
   playfabManager: {fileID: 519420033}
+  audioManager: {fileID: 519420034}
   Coins: 0
   Pedoni: 0
   CoinsText: {fileID: 1276393719}
   PedoniText: {fileID: 2031936116}
   PedoniInGameOverText: {fileID: 1185256499}
-  MaxPedoniText: {fileID: 898335298}
+  HighscoreText: {fileID: 898335298}
   Pause: {fileID: 2018979967}
   Close: {fileID: 2081319948}
   GameOverPanel: {fileID: 115222047}
@@ -3723,7 +3765,7 @@ GameObject:
   - component: {fileID: 1660256607}
   - component: {fileID: 1660256606}
   m_Layer: 0
-  m_Name: CoinSoundManager
+  m_Name: CoinSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3740,7 +3782,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: a02201b97ef08ae488c784dac278682f, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

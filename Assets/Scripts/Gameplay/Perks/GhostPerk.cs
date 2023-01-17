@@ -102,11 +102,19 @@ public class GhostPerk : MonoBehaviour
                         }
                         UITimeLeftText.gameObject.SetActive(true);
                         GameManagerObj.Bus.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 0.5f);
-                        IsActivated = true;
+
                     },
-                    error => Debug.Log(error.ErrorMessage));
+                    error =>
+                    {
+                        IsActivated = false;
+                        Debug.Log(error.ErrorMessage);
+                    });
             },
-            error => Debug.Log(error.ErrorMessage));
+            error => 
+            {
+                IsActivated = false;
+                Debug.Log(error.ErrorMessage);
+            });
     }
 
     public void Activate()
@@ -115,6 +123,7 @@ public class GhostPerk : MonoBehaviour
         {
             if (!IsActivated)
             {
+                IsActivated = true;
                 SendRequesteUsePerk();
             }
         }

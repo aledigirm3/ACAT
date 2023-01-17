@@ -9,12 +9,9 @@ using TMPro;
 
 public class PlayfabManager : MonoBehaviour
 {
-    [Header("MENU_UI")]
-    public TextMeshProUGUI MoneyText;
-    public TextMeshProUGUI MultiplierPerkText;
-    public TextMeshProUGUI GhostPerkText;
+    public AudioManager audioManager;
 
-    [Header("UI")]
+    [Header("MENU")]
     public TextMeshProUGUI MessageText;
     public TMP_InputField emailInput;
     public TMP_InputField usernameInput;
@@ -28,6 +25,7 @@ public class PlayfabManager : MonoBehaviour
     public bool IsLogginIn;
     public bool IsSigninUp;
     public bool IsResettingPassword;
+
 
     void Start()
     {
@@ -56,7 +54,6 @@ public class PlayfabManager : MonoBehaviour
 
     void OnLoginSuccess(LoginResult result)
     {
-        Debug.Log("Logged in!");
         if (result.InfoResultPayload.PlayerProfile.DisplayName != null)
         { 
             MainMenu.Username = result.InfoResultPayload.PlayerProfile.DisplayName;
@@ -64,8 +61,23 @@ public class PlayfabManager : MonoBehaviour
                 new GetUserDataRequest(), 
                 result =>
                 {
-                    OnDataReceived(result);
-                    SceneManager.LoadScene("Menu");
+                    if (result.Data != null)
+                    {
+                        if (result.Data.ContainsKey("Money") && result.Data.ContainsKey("GhostPerk") && result.Data.ContainsKey("MultiplierPerk"))
+                        {
+                            //Imposto i dati dell'utente
+                            PlayerPrefs.SetInt("Money", int.Parse(result.Data["Money"].Value));
+                            PlayerPrefs.SetInt("GhostPerk", int.Parse(result.Data["GhostPerk"].Value));
+                            PlayerPrefs.SetInt("MultiplierPerk", int.Parse(result.Data["MultiplierPerk"].Value));
+
+                            //Richiedo l'highscore al server dalla leaderboard e carico la scena Menu
+                            GetPlayerHighscore("Menu");
+                        }
+                        else
+                            SetDefaultPlayerData();
+                    }
+                    else
+                        SetDefaultPlayerData();
                 }, 
                 OnError);
         }
@@ -87,6 +99,8 @@ public class PlayfabManager : MonoBehaviour
     {
         if (!IsSigninUp)
         {
+            audioManager.PlayButtonSound();
+
             IsLogginIn = false;
             IsSigninUp = true;
 
@@ -102,7 +116,8 @@ public class PlayfabManager : MonoBehaviour
             ForgotPasswordButton.gameObject.SetActive(false);
         }
         else
-        { 
+        {
+            audioManager.PlayButtonSound();
             if (passwordInput.text.Length < 6)
             {
                 MessageText.text = "Password too short!";
@@ -124,6 +139,8 @@ public class PlayfabManager : MonoBehaviour
     {
         if (!IsLogginIn)
         {
+            audioManager.PlayButtonSound();
+
             IsLogginIn = true;
 
             MessageText.text = "Please login";
@@ -141,6 +158,8 @@ public class PlayfabManager : MonoBehaviour
         }
         else
         {
+            audioManager.PlayButtonSound();
+
             MessageText.text = "Logging in...";
             var request = new LoginWithPlayFabRequest
             {
@@ -159,6 +178,7 @@ public class PlayfabManager : MonoBehaviour
     {
         if (IsLogginIn)
         {
+            audioManager.PlayButtonSound();
             IsLogginIn = false;
             IsResettingPassword = true;
 
@@ -174,6 +194,7 @@ public class PlayfabManager : MonoBehaviour
         }
         else
         {
+            audioManager.PlayButtonSound();
             MessageText.text = "Sending email reset request...";
             var request = new SendAccountRecoveryEmailRequest
             {
@@ -186,6 +207,7 @@ public class PlayfabManager : MonoBehaviour
 
     public void OnBack()
     {
+        audioManager.PlayButtonSound();
         BackButton.gameObject.SetActive(false);
         IsLogginIn = false;
         IsSigninUp = false;
@@ -195,51 +217,40 @@ public class PlayfabManager : MonoBehaviour
 
     //########## LEADERBOARD ##########//
 
-    public void SendLeaderboard(int score)
+    public int GetPlayerHighscore(string loadScene = null)
     {
-        var request = new UpdatePlayerStatisticsRequest
-        {
-            Statistics = new List<StatisticUpdate>
-            {
-                new StatisticUpdate {
-                    StatisticName = "PedoniLeaderboard",
-                    Value = score
-                }
-            }
-        };
-
-        PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderboardUpdate, OnError);
-    }
-
-    void OnLeaderboardUpdate(UpdatePlayerStatisticsResult result)
-    {
-        Debug.Log("Successful leaderboard sent");
-    }
-
-    public void GetLeaderboard()
-    {
-        var request = new GetLeaderboardRequest
+        int score = 0;
+        var request = new GetLeaderboardAroundPlayerRequest
         {
             StatisticName = "PedoniLeaderboard",
-            StartPosition = 0,
-            MaxResultsCount = 10
+            MaxResultsCount = 1
         };
-        PlayFabClientAPI.GetLeaderboard(request, OnLeaderboardGet, OnError);
-    }
+        PlayFabClientAPI.GetLeaderboardAroundPlayer(
+            request,
+            result => 
+            { 
+                PlayerPrefs.SetInt("Highscore", result.Leaderboard[0].StatValue);
+                if (loadScene != null)
+                    SceneManager.LoadScene("Menu");
+            },
+            error => 
+            {
+                PlayerPrefs.SetInt("Highscore", 0);
+                if (loadScene != null)
+                    SceneManager.LoadScene("Menu");
+            });
 
-    void OnLeaderboardGet(GetLeaderboardResult result)
-    {
-        foreach (var item in result.Leaderboard) 
-        {
-            Debug.Log(item.Position + " " + item.PlayFabId + " " + item.StatValue);
-        }
+        return score;
     }
 
     //########## PLAYER DATA ##########//
 
     public void GetAllPlayerData()
     {
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataReceived, OnError);
+        PlayFabClientAPI.GetUserData(
+            new GetUserDataRequest(),
+            result => Debug.Log("Data received!"), 
+            OnError);
     }
 
     public void SetDefaultPlayerData()
@@ -253,59 +264,19 @@ public class PlayfabManager : MonoBehaviour
                 { "MultiplierPerk", "0" }
             }
         };
-        PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
-    }
-
-    public void AddMoney(int money)
-    {
-        var temp = PlayerPrefs.GetInt("Money") + money;
-        var request = new UpdateUserDataRequest
-        {
-            Data = new Dictionary<string, string>
+        PlayFabClientAPI.UpdateUserData(
+            request,
+            result =>
             {
-                { "Money", temp.ToString() }
-            }
-        };
-        PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
-        GetAllPlayerData();
-    }
+                //Imposto i dati dell'utente di default
+                PlayerPrefs.SetInt("Money", 0);
+                PlayerPrefs.SetInt("GhostPerk", 0);
+                PlayerPrefs.SetInt("MultiplierPerk", 0);
+                PlayerPrefs.SetInt("Highscore", 0);
 
-
-    void OnDataReceived(GetUserDataResult result)
-    {
-        Debug.Log("Data received!");
-        if (result.Data != null)
-        {
-            if (result.Data.ContainsKey("Money") && result.Data.ContainsKey("GhostPerk") && result.Data.ContainsKey("MultiplierPerk"))
-            {
-                PlayerPrefs.SetInt("Money", int.Parse(result.Data["Money"].Value));
-                if (MoneyText != null)
-                    MoneyText.text = PlayerPrefs.GetInt("Money").ToString();
-
-                PlayerPrefs.SetInt("GhostPerk", int.Parse(result.Data["GhostPerk"].Value));
-                if (GhostPerkText != null)
-                    GhostPerkText.text = PlayerPrefs.GetInt("GhostPerk").ToString() + "/5";
-
-                PlayerPrefs.SetInt("MultiplierPerk", int.Parse(result.Data["MultiplierPerk"].Value));
-                if (MultiplierPerkText != null)
-                    MultiplierPerkText.text = PlayerPrefs.GetInt("MultiplierPerk").ToString() + "/5";
-            }
-            else
-            {
-                Debug.Log("Data reset!");
-                SetDefaultPlayerData();
-            }
-        }
-        else
-        {
-            Debug.Log("Data reset!");
-            SetDefaultPlayerData();
-        }
-    }
-
-    void OnDataSend(UpdateUserDataResult result)
-    {
-        Debug.Log("Successful user data send");
+                SceneManager.LoadScene("Menu");
+            },
+            OnError);
     }
 
     void OnError(PlayFabError error)

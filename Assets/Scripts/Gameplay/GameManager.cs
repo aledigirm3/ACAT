@@ -10,7 +10,7 @@ using PlayFab.ClientModels;
 public class GameManager : MonoBehaviour
 {
     public GameObject Bus;
-    public PlayfabManager playfabManager;
+    public AudioManager audioManager;
 
     //STATS
     public int Coins;
@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI CoinsText;
     public TextMeshProUGUI PedoniText;
     public TextMeshProUGUI PedoniInGameOverText;
-    public TextMeshProUGUI MaxPedoniText;
+    public TextMeshProUGUI HighscoreText;
     public Button Pause;
     public Button Close;
 
@@ -36,15 +36,8 @@ public class GameManager : MonoBehaviour
     public float Difficulty;
     public float TimeBetweenDifficulties;
     
-    //AUDIO
-    public AudioSource GameMusic;
-    public AudioSource ButtonMusic;
-    public AudioSource PedoniMusic;
-    public AudioSource CoinSound;
-
     private Coroutine coroutine;
 
-    //SETUP
     void SetupUI()
     {
         PedoniText.text = Pedoni.ToString();
@@ -56,6 +49,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Destroy(BackgroundMusic.instance.gameObject);
         Coins = 0;
         Pedoni = 0;
         Difficulty = 1;
@@ -64,16 +58,6 @@ public class GameManager : MonoBehaviour
         SetupUI();
         Time.timeScale = 1;
         coroutine = StartCoroutine(IncreaseDifficulty());
-
-        if(PlayerPrefs.GetInt("Music") == 1)
-        {
-            GameMusic.Play();
-        }
-        else
-        {
-            GameMusic.Stop();
-        }
-
     }
 
     //Controllo di collisioni "friendly" aventi comportamenti simili
@@ -81,13 +65,13 @@ public class GameManager : MonoBehaviour
     {
         if (obj.tag == "Coin")
         {
-            CoinSound.Play();
+            audioManager.PlayCoinSound();
             Coins += 1;
             CoinsText.text = Coins.ToString();
         }
         else if (obj.tag == "Pedone")
         {
-            PedoniMusic.Play();
+            audioManager.PlayPedoneSound();
             if (PerkManager.GetComponent<MultiplierPerk>().IsActivated)
                 Pedoni += 2;
             else    
@@ -103,7 +87,7 @@ public class GameManager : MonoBehaviour
         PerkManager.GetComponent<GhostPerk>().Toggle(value);
     }
 
-    private void SendRequestOnGameOver()
+    private void SendAddCoinsRequest()
     {
         var request = new UpdateUserDataRequest
         {
@@ -124,11 +108,33 @@ public class GameManager : MonoBehaviour
             error => Debug.Log(error.ErrorMessage));
     }
 
+    private void SendNewHighscoreRequest()
+    {
+        var request = new UpdatePlayerStatisticsRequest
+        {
+            Statistics = new List<StatisticUpdate>
+            {
+                new StatisticUpdate {
+                    StatisticName = "PedoniLeaderboard",
+                    Value = Pedoni
+                }
+            }
+        };
+        PlayFabClientAPI.UpdatePlayerStatistics(
+            request, 
+            result =>
+            {
+                PlayerPrefs.SetInt("Highscore", Pedoni);
+                HighscoreText.text = ("NEW HIGHSCORE: " + PlayerPrefs.GetInt("Highscore").ToString());
+            }, 
+            error => Debug.Log(error.ErrorMessage));
+    }
+
     public void OnGameOver()
     {
         Time.timeScale = 0;
         Gameover = true;
-        GameMusic.Stop();
+        audioManager.PauseBackgroundGameplayMusic();
 
         //Deattivo i perk
         PerkManager.GetComponent<MultiplierPerk>().Deactivate();
@@ -138,52 +144,51 @@ public class GameManager : MonoBehaviour
         Close.gameObject.SetActive(false);
         GameplayPanel.SetActive(false);
 
-        //Salvo il nuovo punteggio più alto e aggiungo le monete raccolte
-        playfabManager.SendLeaderboard(Pedoni);
+        //Salvo il nuovo punteggio più alto
         if (Pedoni > PlayerPrefs.GetInt("Highscore"))
-            PlayerPrefs.SetInt("Highscore", Pedoni);
-        SendRequestOnGameOver();
+            SendNewHighscoreRequest();
+        else
+            HighscoreText.text = ("HIGHSCORE: " + PlayerPrefs.GetInt("Highscore").ToString());
 
-        //Setup UI di Gameover
-        MaxPedoniText.text = ("HIGHEST SCORE: " + PlayerPrefs.GetInt("Highscore").ToString());
+        //Salvo le monete raccolte
+        SendAddCoinsRequest();
+
         PedoniInGameOverText.text = ("SCORE: " + Pedoni);
         GameOverPanel.SetActive(true);
     }
 
     public void OnPause()
     {
-        ButtonMusic.Play();
+        audioManager.PlayButtonSound();
         Time.timeScale = 0;
         GamePaused = true;
         Pause.gameObject.SetActive(false);
         Close.gameObject.SetActive(true);
         TogglePerks(false);
         PausePanel.gameObject.SetActive(true);
-        GameMusic.Pause();
+        audioManager.PauseBackgroundGameplayMusic();
     }
 
     public void OnResume()
     {
-        ButtonMusic.Play();
+        audioManager.PlayButtonSound();
         Time.timeScale = 1;
         Close.gameObject.SetActive(false);
         Pause.gameObject.SetActive(true);
         TogglePerks(true);
         PausePanel.gameObject.SetActive(false);
-        if(PlayerPrefs.GetInt("Music") == 1){
-        GameMusic.Play();
-        }
+        audioManager.PlayBackgroundGameplayMusic();
     }
 
     public void Restart()
     {
-        ButtonMusic.Play();
+        audioManager.PlayButtonSound();
         SceneManager.LoadScene("Game");
     }
 
     public void MainMenu()
     {
-        ButtonMusic.Play();
+        audioManager.PlayButtonSound();
         SceneManager.LoadScene("Menu");
     }
 
