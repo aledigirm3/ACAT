@@ -57,7 +57,7 @@ public class AudioManager : MonoBehaviour
         {
             PlayBackgroundMenuMusic();
         }
-        if (SceneManager.GetActiveScene().name == "Menu")
+        if (SceneManager.GetActiveScene().name == "Menu" || SceneManager.GetActiveScene().name == "Game")
         {
             MuteMusicButton.gameObject.SetActive(false);
             MusicButton.gameObject.SetActive(true);
@@ -74,7 +74,7 @@ public class AudioManager : MonoBehaviour
         {
             PauseBackgroundMenuMusic();
         }
-        if (SceneManager.GetActiveScene().name == "Menu")
+        if (SceneManager.GetActiveScene().name == "Menu" || SceneManager.GetActiveScene().name == "Game")
         {
             MuteMusicButton.gameObject.SetActive(true);
             MusicButton.gameObject.SetActive(false);
@@ -85,7 +85,7 @@ public class AudioManager : MonoBehaviour
     public void SoundOn()
     {
         PlayerPrefs.SetInt("Sound", 1);
-        if (SceneManager.GetActiveScene().name == "Menu")
+        if (SceneManager.GetActiveScene().name == "Menu" || SceneManager.GetActiveScene().name == "Game")
         {
             MuteSoundButton.gameObject.SetActive(false);
             SoundButton.gameObject.SetActive(true);
@@ -96,7 +96,7 @@ public class AudioManager : MonoBehaviour
     public void SoundOff()
     {
         PlayerPrefs.SetInt("Sound", 0);
-        if (SceneManager.GetActiveScene().name == "Menu")
+        if (SceneManager.GetActiveScene().name == "Menu" || SceneManager.GetActiveScene().name == "Game")
         {
             SoundButton.gameObject.SetActive(false);
             MuteSoundButton.gameObject.SetActive(true);
@@ -131,16 +131,19 @@ public class AudioManager : MonoBehaviour
 
     public void PlayButtonSound()
     {
-        ButtonSound.Play();
+        if (PlayerPrefs.GetInt("Sound") == 1)
+            ButtonSound.Play();
     }
 
     public void PlayCoinSound()
     {
-        CoinSound.Play();
+        if (PlayerPrefs.GetInt("Sound") == 1)
+            CoinSound.Play();
     }
 
     public void PlayPedoneSound()
     {
-        PedoneSound.Play();
+        if (PlayerPrefs.GetInt("Sound") == 1)
+            PedoneSound.Play();
     }
 }
