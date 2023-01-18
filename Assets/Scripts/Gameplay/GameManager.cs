@@ -49,7 +49,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Destroy(BackgroundMusic.instance.gameObject);
+        if (BackgroundMusic.instance != null)
+            Destroy(BackgroundMusic.instance.gameObject);
         Coins = 0;
         Pedoni = 0;
         Difficulty = 1;
